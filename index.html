@@ -189,12 +189,17 @@ p{margin:0}
 /* world */
 .world-shot{border:6px solid var(--paper-3);border-radius:6px;box-shadow:0 8px 0 rgba(80,55,25,.2);transform:rotate(-.8deg);overflow:hidden;max-width:100%}
 .world-shot img{width:100%;height:auto;aspect-ratio:1400/791;object-fit:cover}
-.world-cap{font-size:.84rem;color:var(--muted);margin-top:10px;text-align:center}
-.world-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:center;margin-bottom:28px}
-@media (max-width:860px){.world-top{grid-template-columns:1fr}}
-.loop{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.loop li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
-.loop .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.2rem;color:var(--paper-3)}
+.world-cap{font-size:.84rem;color:var(--muted);margin:0;text-align:left}
+/* screenshot left, loop list right; the list spans exactly the screenshot's height (first item on its top edge,
+   last item on its bottom edge) and the caption sits under the screenshot, left-aligned with it */
+.world-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"shot list" "cap .";column-gap:clamp(28px,4vw,56px);row-gap:10px;align-items:stretch;margin-bottom:28px}
+.world-top .world-shot{grid-area:shot}
+.world-top .loop{grid-area:list}
+.world-top .world-cap{grid-area:cap}
+@media (max-width:860px){.world-top{grid-template-columns:1fr;grid-template-areas:"shot" "cap" "list";row-gap:16px}}
+.loop{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.loop li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:start}
+.loop .ic{display:block;width:52px;height:52px;filter:drop-shadow(0 3px 0 rgba(24,40,58,.25))}
 .loop b{display:block;color:var(--ink)}
 .loop span{color:var(--muted);font-size:.93rem;line-height:1.6}
 .biomes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
@@ -548,15 +553,13 @@ footer{background:var(--paper-2)}
         <h2 data-i18n="worldH">2D sticker heroes, cozy 3D islands</h2>
       </div>
       <div class="world-top">
-        <div>
-          <div class="world-shot"><img src="img/hub.jpg" alt="In-game Hub Island: sand, rocks, palm trees, a pirate ship and wooden signs reading PLAY and Dummy Practice" data-i18n-alt="hubAlt" loading="lazy"></div>
-          <p class="world-cap" data-i18n="hubCap">Hub Island, captured in-engine. Characters are 3D models with 3D animation, rendered as 2D sticker sprites in 8 directions.</p>
-        </div>
+        <div class="world-shot"><img src="img/hub.jpg" alt="In-game Hub Island: sand, rocks, palm trees, a pirate ship and wooden signs reading PLAY and Dummy Practice" data-i18n-alt="hubAlt" loading="lazy"></div>
         <ul class="loop">
-          <li><span class="ic" style="background:var(--gold);color:var(--text)">$</span><div><b data-i18n="lp1h">Beat enemy waves, earn gold</b><span data-i18n="lp1">Every wave drops treasure.</span></div></li>
-          <li><span class="ic" style="background:var(--red)">!</span><div><b data-i18n="lp2h">Defeat bosses, unlock gear</b><span data-i18n="lp2">Cutlass, hammer and harpoon, plus abilities like dash attack, fire attack, cannonball and fireball.</span></div></li>
-          <li><span class="ic" style="background:var(--leaf)">⚓</span><div><b data-i18n="lp3h">Shop at the port</b><span data-i18n="lp3">Spend gold with the merchant, then practice team attacks at the training grounds before you sail.</span></div></li>
+          <li><img class="ic" src="img/coin-gold.webp" width="128" height="128" alt=""><div><b data-i18n="lp1h">Beat enemy waves, earn gold</b><span data-i18n="lp1">Every wave drops treasure.</span></div></li>
+          <li><img class="ic" src="img/coin-boss.webp" width="128" height="128" alt=""><div><b data-i18n="lp2h">Defeat bosses, unlock gear</b><span data-i18n="lp2">Cutlass, hammer and harpoon, plus abilities like dash attack, fire attack, cannonball and fireball.</span></div></li>
+          <li><img class="ic" src="img/coin-port.webp" width="128" height="128" alt=""><div><b data-i18n="lp3h">Shop at the port</b><span data-i18n="lp3">Spend gold with the merchant, then practice team attacks at the training grounds before you sail.</span></div></li>
         </ul>
+        <p class="world-cap" data-i18n="hubCap">Hub Island, captured in-engine. Characters are 3D models with 3D animation, rendered as 2D sticker sprites in 8 directions.</p>
       </div>
 
       <div class="hub-start"><b>HUB ISLAND</b><span data-i18n="hubStart">Tropical port · merchant · training tutorial. Every voyage starts here.</span></div>
