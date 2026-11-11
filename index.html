@@ -35,7 +35,7 @@
 }
 html[lang="zh-Hant"]{--font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Nunito",system-ui,sans-serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:clamp(16px,calc(10px + .5vw),19px)} /* type grows a little on wide screens */
+html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{
   background-color:var(--paper);
@@ -52,12 +52,15 @@ img{display:block}
 .wrap{max-width:1500px;margin:0 auto;padding-left:max(clamp(16px,4vw,64px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,64px),env(safe-area-inset-right,0px))}
 h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
 p{margin:0}
-.section{padding-block:clamp(56px,8vw,96px)}
+.section{padding-block:clamp(36px,4.5vw,60px)}
+.section.alt{background:color-mix(in srgb,var(--paper-2) 50%,transparent)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
 
 /* wooden plank sign: ends (with the nails) keep their shape, the middle grain stretches to fit the words */
-.scroll{display:inline-flex;align-items:center;justify-content:center;min-height:62px;padding:10px 16px 12px;border-style:solid;border-width:0 30px;border-color:#b0723f;border-image:url("img/plank.webp") 0 112 fill / 0 30px stretch;background:transparent;color:#fff4dc;font-family:var(--font-display);font-size:clamp(1.25rem,3vw,1.6rem);letter-spacing:.05em;text-transform:uppercase;text-shadow:0 2px 0 #5a3418,0 0 1px #5a3418;filter:drop-shadow(0 3px 0 rgba(90,55,25,.25));max-width:100%;text-align:center}
-.section-head{display:grid;gap:18px;justify-items:start;max-width:52rem;margin-bottom:40px}
-.section-head h2{font-size:clamp(1.8rem,4.4vw,2.6rem);font-weight:900;color:var(--ink)}
+.scroll{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:7px 12px 9px;border-style:solid;border-width:0 24px;border-color:#b0723f;border-image:url("img/plank.webp") 0 112 fill / 0 24px stretch;background:transparent;color:#fff4dc;font-family:var(--font-display);font-size:clamp(1.05rem,2vw,1.25rem);letter-spacing:.05em;text-transform:uppercase;text-shadow:0 2px 0 #5a3418,0 0 1px #5a3418;filter:drop-shadow(0 3px 0 rgba(90,55,25,.25));max-width:100%;text-align:center}
+.section-head{display:grid;gap:10px;justify-items:start;max-width:52rem;margin-bottom:22px}
+.section-head h2{font-size:clamp(1.35rem,2.4vw,1.8rem);font-weight:900;color:var(--ink)}
 .section-head p{color:var(--muted)}
 .center{justify-items:center;text-align:center;margin-inline:auto}
 
@@ -78,22 +81,22 @@ p{margin:0}
 
 /* hero */
 .hero{position:relative;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,4vw,64px);align-items:center;padding-block:clamp(40px,7vw,80px) clamp(48px,7vw,80px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:center;padding-block:clamp(28px,4vw,48px)}
 @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
-.hero-copy{display:grid;gap:22px;justify-items:start;min-width:0}
-.title{margin:0;line-height:0;width:min(36rem,100%)}
-.title img{width:100%;height:auto;filter:drop-shadow(0 5px 0 var(--gold))}
-.tagline{font-family:var(--font-display);font-size:clamp(1.25rem,2.8vw,1.6rem);color:var(--ink);letter-spacing:.03em}
-.pitch{max-width:64ch}
+.hero-copy{display:grid;gap:14px;justify-items:start;min-width:0}
+.title{margin:0;line-height:0;width:min(25rem,100%)}
+.title img{width:100%;height:auto;filter:drop-shadow(0 4px 0 var(--gold))}
+.tagline{font-family:var(--font-display);font-size:clamp(1.15rem,2vw,1.35rem);color:var(--ink);letter-spacing:.03em}
+.pitch{max-width:62ch}
 .chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
 .chips li{border:2px solid var(--ink);color:var(--ink);border-radius:999px;padding:2px 14px;font-size:.88rem;font-weight:800;background:var(--paper-3)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;font-family:var(--font-display);font-size:1.15rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;padding:10px 22px;border-radius:12px;border:3px solid var(--text);cursor:pointer;box-shadow:0 4px 0 var(--text);transition:transform .1s,box-shadow .1s}
+.btn{display:inline-flex;align-items:center;font-family:var(--font-display);font-size:1rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;padding:8px 18px;border-radius:12px;border:3px solid var(--text);cursor:pointer;box-shadow:0 4px 0 var(--text);transition:transform .1s,box-shadow .1s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--text)}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
 .btn-primary{background:var(--gold);color:var(--text)}
 .btn-ghost{background:var(--paper-3);color:var(--ink)}
-.stickers{position:relative;aspect-ratio:1/0.9;width:min(40rem,100%);max-width:100%;justify-self:center}
+.stickers{position:relative;aspect-ratio:1/0.9;width:min(29rem,100%);max-width:100%;justify-self:center}
 .stickers .island{position:absolute;inset:18% 4% 4% 4%;border-radius:46% 54% 40% 60%/55% 45% 55% 45%;background:var(--leaf);opacity:.22}
 .stickers .x{position:absolute;right:10%;top:8%;font-family:var(--font-display);font-size:3rem;color:var(--red);transform:rotate(-8deg)}
 .stickers img{position:absolute;width:52%;filter:drop-shadow(0 6px 0 rgba(80,55,25,.28))}
@@ -103,73 +106,74 @@ p{margin:0}
 @keyframes wob2{50%{transform:rotate(8deg) translateY(-8px)}}
 
 /* story */
-.story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:start}
+.story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:start}
 @media (max-width:860px){.story-grid{grid-template-columns:1fr}}
-.story-text{display:grid;gap:16px;max-width:64ch}
-.story-text .big{font-size:1.2rem;font-weight:800;color:var(--ink)}
-.kids{display:grid;gap:16px}
-.kid{background:var(--paper-3);border:2px solid var(--paper-2);border-radius:14px;padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center;transform:rotate(-.6deg)}
+.story-text{display:grid;gap:12px;max-width:72ch}
+.story-text .big{font-size:1.08rem;font-weight:800;color:var(--ink)}
+.kids{display:grid;gap:12px}
+.kid{background:var(--paper-3);border:2px solid var(--paper-2);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center;transform:rotate(-.6deg)}
 .kid:nth-child(2){transform:rotate(.6deg)}
-.kid .age{grid-row:span 2;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.5rem;color:var(--paper-3)}
+.kid .age{grid-row:span 2;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.3rem;color:var(--paper-3)}
 .kid.pierce .age{background:var(--ink)}
 .kid.penny .age{background:var(--red)}
 .kid b{font-size:1.1rem}
 .kid b small{font-weight:600;color:var(--muted);font-size:.85rem;margin-left:6px}
 .kid span{color:var(--muted);font-size:.93rem;line-height:1.6}
-.motto{margin-top:8px;padding:14px 22px;border-left:4px dashed var(--rope);font-family:var(--font-display);font-size:1.3rem;letter-spacing:.02em;color:var(--rope)}
+.motto{margin-top:4px;padding:6px 18px;border-left:4px dashed var(--rope);font-family:var(--font-display);font-size:1.15rem;letter-spacing:.02em;color:var(--rope)}
 
 /* pillars */
 .pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 @media (max-width:860px){.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:440px){.pillars{grid-template-columns:1fr}}
-.pillar{display:grid;gap:8px;align-content:start;text-align:center;justify-items:center;padding:20px 16px}
-.pillar svg{width:44px;height:64px}
+.pillar{display:grid;gap:6px;align-content:start;text-align:center;justify-items:center;padding:6px 10px}
+.pillar svg{width:30px;height:44px}
 .pillar svg *{fill:var(--paper-3);stroke:var(--ink-soft);stroke-width:2}
-.pillar h3{font-family:var(--font-display);font-weight:400;color:var(--leaf);font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
-.pillar p{color:var(--muted);font-size:.93rem;line-height:1.65}
-.feeling{margin-top:32px;text-align:center;font-weight:800;color:var(--ink)}
+.pillar h3{font-family:var(--font-display);font-weight:400;color:var(--leaf);font-size:1.15rem;letter-spacing:.04em;text-transform:uppercase}
+.pillar p{color:var(--muted);font-size:.9rem;line-height:1.6}
+.feeling{margin-top:18px;text-align:center;font-weight:800;color:var(--ink)}
 .feeling em{font-style:normal;color:var(--red)}
 
 /* crew */
-.crew-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.crew-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,32px)}
 @media (max-width:860px){.crew-grid{grid-template-columns:1fr}}
-.crew{background:var(--paper-3);border-radius:18px;padding:28px;display:grid;gap:18px;align-content:start;box-shadow:0 3px 0 var(--paper-2)}
-.crew-top{display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;align-items:center}
-@media (max-width:420px){.crew-top{grid-template-columns:96px minmax(0,1fr)}.crew-top img{width:96px}}
-.crew-top img{width:130px;height:auto;filter:drop-shadow(0 4px 0 rgba(80,55,25,.25))}
-.crew .who{font-family:var(--font-display);letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase}
+.crew{background:var(--paper-3);border-radius:16px;padding:20px 22px;display:grid;gap:12px;align-content:start;box-shadow:0 3px 0 var(--paper-2)}
+.crew-top{display:grid;grid-template-columns:92px minmax(0,1fr);gap:16px;align-items:center}
+.crew-top img{width:92px;height:auto;filter:drop-shadow(0 4px 0 rgba(80,55,25,.25))}
+.crew .who{font-family:var(--font-display);letter-spacing:.04em;font-size:.95rem;text-transform:uppercase}
 .crew.paws .who{color:var(--red)} .crew.plunder .who{color:var(--ink)}
-.crew h3{font-family:var(--font-display);font-weight:400;font-size:2.6rem;line-height:1;color:var(--text)}
-.crew .traits{color:var(--muted);font-size:.9rem;line-height:1.6;margin-top:6px}
+.crew h3{font-family:var(--font-display);font-weight:400;font-size:1.9rem;line-height:1;color:var(--text)}
+.crew .traits{color:var(--muted);font-size:.86rem;line-height:1.5;margin-top:4px}
+.crew > p{font-size:.95rem;line-height:1.65}
 .moves{list-style:none;margin:0;padding:0;border-top:2px dashed var(--paper-2)}
-.moves li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;padding-block:12px;border-bottom:2px dashed var(--paper-2)}
-.moves .slot{font-weight:900;font-size:.85rem;color:var(--rope);padding-top:2px}
-.moves b{display:block}
-.moves span{display:block;color:var(--muted);font-size:.92rem;line-height:1.6}
-.weapon{font-size:.88rem;font-weight:800;color:var(--ink-soft)}
-.banter{margin-top:28px;display:grid;gap:10px;max-width:560px;margin-inline:auto}
-.bubble{position:relative;background:var(--paper-3);border:2px solid var(--text);border-radius:18px;padding:10px 18px;max-width:85%;font-weight:800}
+.moves li{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;padding-block:7px;border-bottom:2px dashed var(--paper-2)}
+.moves .slot{font-weight:900;font-size:.8rem;color:var(--rope);padding-top:2px}
+.moves b{display:block;font-size:.95rem}
+.moves span{display:block;color:var(--muted);font-size:.88rem;line-height:1.5}
+.weapon{font-size:.85rem;font-weight:800;color:var(--ink-soft)}
+/* dialogue and the contrast list share one row */
+.duo{margin-top:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(20px,3vw,40px);align-items:center}
+@media (max-width:860px){.duo{grid-template-columns:1fr}}
+.banter{display:grid;gap:8px}
+.bubble{position:relative;background:var(--paper-3);border:2px solid var(--text);border-radius:16px;padding:6px 16px;max-width:85%;font-weight:800;font-size:.95rem}
 .bubble small{display:block;font-family:var(--font-display);font-weight:400;font-size:.85rem;letter-spacing:.04em}
 .bubble.l{justify-self:start;border-bottom-left-radius:4px}.bubble.l small{color:var(--ink)}
 .bubble.r{justify-self:end;border-bottom-right-radius:4px}.bubble.r small{color:var(--red)}
-.contrast{margin-top:36px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;list-style:none;padding:0}
-@media (max-width:860px){.contrast{grid-template-columns:1fr}}
-.contrast li{display:grid;gap:2px;text-align:center;padding:12px;border-top:2px dashed var(--ink-soft);font-size:.92rem}
+.contrast{margin:0;display:grid;list-style:none;padding:0}
+.contrast li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;padding:6px 4px;border-bottom:2px dashed var(--paper-2);font-size:.92rem}
 .contrast .p1{color:var(--ink);font-weight:900}.contrast .p2{color:var(--red);font-weight:900}
 
 /* team attack */
-.combos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-@media (max-width:900px){.combos{grid-template-columns:1fr}}
-.combo{display:grid;gap:8px;align-content:start;padding-top:16px;border-top:3px dashed var(--ink-soft)}
-.combo .pair{font-family:var(--font-display);letter-spacing:.04em;font-size:1rem;color:var(--rope)}
-.combo h3{font-size:1.2rem;font-weight:900;color:var(--ink)}
-.combo p{color:var(--muted);font-size:.95rem}
+.combos{display:grid;gap:12px}
+.combo{display:grid;gap:4px;align-content:start;background:var(--paper-3);border-radius:14px;padding:14px 18px;border-left:5px solid var(--ink-soft)}
+.combo .pair{font-family:var(--font-display);letter-spacing:.04em;font-size:.85rem;color:var(--rope)}
+.combo h3{font-size:1.08rem;font-weight:900;color:var(--ink)}
+.combo p{color:var(--muted);font-size:.9rem;line-height:1.6}
 
 /* world */
 .world-shot{border:6px solid var(--paper-3);border-radius:6px;box-shadow:0 8px 0 rgba(80,55,25,.2);transform:rotate(-.8deg);overflow:hidden;max-width:100%}
 .world-shot img{width:100%;height:auto;aspect-ratio:1400/791;object-fit:cover}
-.world-cap{font-size:.88rem;color:var(--muted);margin-top:12px;text-align:center}
-.world-top{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;margin-bottom:56px}
+.world-cap{font-size:.84rem;color:var(--muted);margin-top:10px;text-align:center}
+.world-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:center;margin-bottom:28px}
 @media (max-width:860px){.world-top{grid-template-columns:1fr}}
 .loop{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .loop li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
@@ -179,7 +183,7 @@ p{margin:0}
 .biomes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
 @media (max-width:860px){.biomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:440px){.biomes{grid-template-columns:1fr}}
-.biome{border-radius:42% 58% 50% 50%/40% 45% 55% 60%;padding:28px 22px 26px;display:grid;gap:8px;justify-items:center;text-align:center;align-content:start;min-height:220px}
+.biome{border-radius:42% 58% 50% 50%/40% 45% 55% 60%;padding:20px 22px 18px;display:grid;gap:6px;justify-items:center;text-align:center;align-content:start}
 .biome:nth-child(2){border-radius:55% 45% 48% 52%/50% 40% 60% 50%}
 .biome:nth-child(3){border-radius:48% 52% 60% 40%/45% 55% 45% 55%}
 .biome:nth-child(4){border-radius:60% 40% 45% 55%/55% 50% 50% 45%}
@@ -192,51 +196,76 @@ p{margin:0}
 .biome .lv span{font-family:var(--font-display);font-size:.95rem;padding:2px 10px;border-radius:999px;background:var(--paper-3);color:var(--ink);border:2px solid var(--ink)}
 .biome .lv span.boss{background:var(--text);color:var(--paper-3);border-color:var(--text)}
 .biome p{font-size:.9rem;color:var(--muted);line-height:1.6}
-.hub-start{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:28px;text-align:center}
+.hub-start{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:16px;text-align:center}
 .hub-start b{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--red);letter-spacing:.04em}
 .hub-start span{color:var(--muted);font-size:.95rem}
-.final{margin-top:32px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;background:var(--text);color:var(--paper-3);border-radius:18px;padding:22px 26px}
-.final .skull{font-family:var(--font-display);font-size:2.6rem;color:var(--gold);line-height:1}
+.final{margin-top:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;background:var(--text);color:var(--paper-3);border-radius:16px;padding:14px 22px}
+.final .skull{font-family:var(--font-display);font-size:2rem;color:var(--gold);line-height:1}
 .final b{display:block;font-size:1.15rem}
 .final span{color:color-mix(in srgb,var(--paper-3) 75%,var(--text));font-size:.94rem}
 
 /* foes */
-.foes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-@media (max-width:900px){.foes{grid-template-columns:1fr}}
-.foe{background:var(--paper-3);border-radius:16px;padding:22px;display:grid;gap:10px;align-content:start}
-.foe .rank{font-family:var(--font-display);letter-spacing:.05em;font-size:.95rem;color:var(--red)}
+.foes{display:grid;gap:12px}
+.foe{background:var(--paper-3);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-content:start;border-left:5px solid var(--red)}
+.foe:has(.minor){border-left-color:var(--ink-soft)}
+.foe > p:last-child{grid-column:1 / -1}
+.foe .rank{font-family:var(--font-display);letter-spacing:.05em;font-size:.85rem;color:var(--red);align-self:center}
 .foe .rank.minor{color:var(--ink-soft)}
-.foe h3{font-size:1.35rem;font-weight:900;color:var(--ink)}
+.foe h3{font-size:1.08rem;font-weight:900;color:var(--ink);align-self:center}
+.foe .shell{grid-column:1 / -1}
 .foe .shell{display:flex;gap:5px;align-items:center;font-size:.85rem;color:var(--muted)}
 .foe .shell i{width:16px;height:10px;border-radius:3px;background:var(--gold);box-shadow:inset 0 -3px 0 var(--rope)}
 .foe .shell i.off{background:var(--paper-2);box-shadow:none}
-.foe p{color:var(--muted);font-size:.95rem}
+.foe p{color:var(--muted);font-size:.9rem;line-height:1.6}
 
 /* play */
 .play-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 @media (max-width:900px){.play-grid{grid-template-columns:1fr}}
-.ctable{background:var(--paper-3);border-radius:16px;padding:20px 22px;min-width:0}
+.ctable{background:var(--paper-3);border-radius:14px;padding:14px 18px;min-width:0}
 .ctable h3{font-size:1.1rem;font-weight:900;color:var(--ink);margin-bottom:6px}
 .ctable dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px}
-.ctable dt,.ctable dd{margin:0;padding-block:9px;border-bottom:2px dashed var(--paper-2);font-size:.94rem}
+.ctable dt,.ctable dd{margin:0;padding-block:6px;border-bottom:2px dashed var(--paper-2);font-size:.94rem}
 .ctable dt{color:var(--muted)}
 .ctable ol{margin:0;padding-left:1.3em;display:grid;gap:6px;font-size:.94rem}
 kbd{font-family:var(--font-display);font-size:.9rem;letter-spacing:.03em;background:var(--paper);border:2px solid var(--text);border-bottom-width:4px;border-radius:6px;padding:0 7px;white-space:nowrap}
 
 /* team */
-.team{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center}
+.team{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;align-items:center}
 @media (max-width:760px){.team{grid-template-columns:1fr;justify-items:center}}
-.team img{width:150px;height:auto}
+.team img{width:110px;height:auto}
 .crewlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:760px){.crewlist{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}}
 @media (max-width:420px){.crewlist{grid-template-columns:1fr}}
-.crewlist li{background:var(--paper-3);padding:12px 18px;display:grid;position:relative;box-shadow:0 2px 0 rgba(90,60,30,.2)}
+.crewlist li{background:var(--paper-3);padding:8px 16px;display:grid;position:relative;box-shadow:0 2px 0 rgba(90,60,30,.2)}
 .crewlist li::before,.crewlist li::after{content:"";position:absolute;top:-4px;bottom:-4px;width:8px;border-radius:4px;background:var(--rope)}
 .crewlist li::before{left:-4px}.crewlist li::after{right:-4px}
 .crewlist b{font-size:1.02rem}
 .crewlist span{color:var(--muted);font-size:.88rem}
-footer{border-top:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
-footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:26px;color:var(--muted);font-size:.88rem}
+/* wishlist banner */
+.wishband{background:var(--text);color:var(--paper-3)}
+.wishband .wrap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,36px);align-items:center;padding-block:22px}
+.wishband img{width:76px;height:auto;filter:drop-shadow(0 4px 0 rgba(0,0,0,.3))}
+.wishband h2{font-family:var(--font-display);font-weight:400;font-size:clamp(1.3rem,2.4vw,1.75rem);letter-spacing:.03em;color:var(--paper-3)}
+.wishband p{color:color-mix(in srgb,var(--paper-3) 75%,var(--text));font-size:.95rem}
+@media (max-width:700px){.wishband .wrap{grid-template-columns:auto minmax(0,1fr)}.wishband .btn{grid-column:1 / -1;justify-self:start}}
+/* footer */
+footer{background:color-mix(in srgb,var(--paper-2) 60%,var(--paper))}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,1.3fr);gap:clamp(24px,3vw,40px);padding-block:36px 24px}
+@media (max-width:900px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.foot-brand,.foot-card{grid-column:1 / -1}}
+.foot-brand{display:grid;gap:8px;align-content:start}
+.foot-brand .tag{font-family:var(--font-display);color:var(--ink);letter-spacing:.04em}
+.foot-brand p{color:var(--muted);font-size:.88rem;max-width:36ch}
+.foot-col h3{font-family:var(--font-display);font-weight:400;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:var(--rope);margin-bottom:10px}
+.foot-col ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.foot-col a{text-decoration:none;font-weight:700;font-size:.92rem;color:var(--text)}
+.foot-col a:hover{color:var(--ink);text-decoration:underline}
+.foot-card{background:var(--paper-3);border:2px solid var(--paper-2);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-content:start}
+.foot-card img{grid-row:span 2;width:52px;height:auto}
+.foot-card b{font-family:var(--font-display);font-weight:400;font-size:1.05rem;letter-spacing:.03em;color:var(--ink)}
+.foot-card p{color:var(--muted);font-size:.86rem;line-height:1.5}
+.foot-card .btn{grid-column:1 / -1;justify-content:center;margin-top:10px}
+.foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:16px 24px;border-top:2px dashed color-mix(in srgb,var(--ink) 25%,transparent);color:var(--muted);font-size:.84rem}
 </style>
 </head>
 <body>
@@ -272,8 +301,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <li>Unreal Engine 5.7</li>
       </ul>
       <div class="ctas">
-        <!-- Steam: replace href="#" with the store page URL once it exists -->
-        <a class="btn btn-primary" id="steamBtn" href="#" target="_blank" rel="noopener" title="Steam page coming soon" data-i18n="cta1">Wishlist on Steam</a>
+        <a class="btn btn-primary steam-link" href="#" target="_blank" rel="noopener" data-i18n="cta1">Wishlist on Steam</a>
         <a class="btn btn-ghost" href="#story" data-i18n="cta2">Read the story</a>
       </div>
     </div>
@@ -316,7 +344,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
   </section>
 
-  <section class="section" id="pillars">
+  <section class="section alt" id="pillars">
     <div class="wrap">
       <div class="section-head center">
         <span class="scroll">Four Pillars</span>
@@ -392,6 +420,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         </article>
       </div>
 
+      <div class="duo">
       <div class="banter" aria-label="Dialogue" data-i18n-aria="banter">
         <p class="bubble l"><small>Plunder</small><span data-i18n="b1">"I have a plan!"</span></p>
         <p class="bubble r"><small>Paws</small><span data-i18n="b2">"Is it a good plan?"</span></p>
@@ -405,11 +434,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <li><span class="p1" data-i18n="c4a">Plunder brings momentum.</span><span class="p2" data-i18n="c4b">Paws brings direction.</span></li>
         <li><span class="p1" data-i18n="c5a">Plunder makes it exciting.</span><span class="p2" data-i18n="c5b">Paws makes it matter.</span></li>
       </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="team-attack">
-    <div class="wrap">
+  <section class="section alt" id="team-attack">
+    <div class="wrap split">
+      <div>
       <div class="section-head">
         <span class="scroll">Team Attack</span>
         <h2 data-i18n="taH">You only win when your moves work together</h2>
@@ -432,6 +463,34 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           <h3 data-i18n="co3h">Pick Each Other Up</h3>
           <p data-i18n="co3">Hitting zero health doesn't knock you out of the game. Your partner walks over and holds <kbd>F</kbd> or controller <kbd>B</kbd> for 3 seconds to revive you. If both of you go down, you wash back to port.</p>
         </article>
+      </div>
+      </div>
+      <div id="foes">
+      <div class="section-head">
+        <span class="scroll">Foes</span>
+        <h2 data-i18n="foesH">Foes in the current playtest</h2>
+        <p data-i18n="foesP">Enemies come in plain and armored versions, melee and ranged. Every attack has a clear wind-up, and that's your cue to dodge.</p>
+      </div>
+      <div class="foes">
+        <article class="foe">
+          <p class="rank">BOSS</p>
+          <h3 data-i18n="f1h">Rocky Turtle</h3>
+          <p class="shell"><i></i><i></i><i></i><i></i> <span data-i18n="heavy">Heavy armor</span></p>
+          <p data-i18n="f1">Glows with a curse while its armor holds. Swings a pickaxe, leaps into the water with a big splash and sends rock waves along the ground. Break its shell and it will try to armor up again.</p>
+        </article>
+        <article class="foe">
+          <p class="rank">BOSS</p>
+          <h3 data-i18n="f2h">Hermit Crab</h3>
+          <p class="shell"><i></i><i></i><i></i><i class="off"></i> <span data-i18n="medium">Medium armor</span></p>
+          <p data-i18n="f2">A shoreline bully with giant claws. It raises a claw to charge before it strikes. Dodge, then crack its shell together.</p>
+        </article>
+        <article class="foe">
+          <p class="rank minor" data-i18n="minion">MINION</p>
+          <h3 data-i18n="f3h">Frog Warrior</h3>
+          <p class="shell"><i></i><i class="off"></i><i class="off"></i><i class="off"></i> <span data-i18n="light">Light armor</span></p>
+          <p data-i18n="f3">Swarms in groups and goes after whoever is still standing. Herd them together with Plunder's Double Sweep and clear them in one go.</p>
+        </article>
+      </div>
       </div>
     </div>
   </section>
@@ -468,37 +527,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
   </section>
 
-  <section class="section" id="foes">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="scroll">Foes</span>
-        <h2 data-i18n="foesH">Foes in the current playtest</h2>
-        <p data-i18n="foesP">Enemies come in plain and armored versions, melee and ranged. Every attack has a clear wind-up, and that's your cue to dodge.</p>
-      </div>
-      <div class="foes">
-        <article class="foe">
-          <p class="rank">BOSS</p>
-          <h3 data-i18n="f1h">Rocky Turtle</h3>
-          <p class="shell"><i></i><i></i><i></i><i></i> <span data-i18n="heavy">Heavy armor</span></p>
-          <p data-i18n="f1">Glows with a curse while its armor holds. Swings a pickaxe, leaps into the water with a big splash and sends rock waves along the ground. Break its shell and it will try to armor up again.</p>
-        </article>
-        <article class="foe">
-          <p class="rank">BOSS</p>
-          <h3 data-i18n="f2h">Hermit Crab</h3>
-          <p class="shell"><i></i><i></i><i></i><i class="off"></i> <span data-i18n="medium">Medium armor</span></p>
-          <p data-i18n="f2">A shoreline bully with giant claws. It raises a claw to charge before it strikes. Dodge, then crack its shell together.</p>
-        </article>
-        <article class="foe">
-          <p class="rank minor" data-i18n="minion">MINION</p>
-          <h3 data-i18n="f3h">Frog Warrior</h3>
-          <p class="shell"><i></i><i class="off"></i><i class="off"></i><i class="off"></i> <span data-i18n="light">Light armor</span></p>
-          <p data-i18n="f3">Swarms in groups and goes after whoever is still standing. Herd them together with Plunder's Double Sweep and clear them in one go.</p>
-        </article>
-      </div>
-    </div>
-  </section>
 
-  <section class="section" id="play">
+
+  <section class="section alt" id="play">
     <div class="wrap">
       <div class="section-head">
         <span class="scroll">How to Play</span>
@@ -555,10 +586,53 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   </section>
 </main>
 
+<section class="wishband" aria-labelledby="wishH">
+  <div class="wrap">
+    <img src="img/sticker-plunder.png" alt="">
+    <div>
+      <h2 id="wishH" data-i18n="banH">Wishlist Plunder Paws on Steam</h2>
+      <p data-i18n="banP">Your wishlist helps us more than you know!</p>
+    </div>
+    <a class="btn btn-primary steam-link" href="#" target="_blank" rel="noopener" data-i18n="banBtn">Wishlist now ›</a>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <span>Plunder Paws · Cozy Corsairs</span>
-    <span data-i18n="footer">In development. Details may change.</span>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="wordmark" href="#top">PLUNDER <span>PAWS</span></a>
+        <span class="tag" data-i18n="tagline">Set sail together for cozy chaos</span>
+        <p data-i18n="ftAbout">A cute co-op pirate action adventure by the Cozy Corsairs team.</p>
+      </div>
+      <nav class="foot-col" aria-label="Explore" data-i18n-aria="ftExplore">
+        <h3 data-i18n="ftExplore">Explore</h3>
+        <ul>
+          <li><a href="#story" data-i18n="navStory">Story</a></li>
+          <li><a href="#crew" data-i18n="navCrew">Crew</a></li>
+          <li><a href="#team-attack" data-i18n="navTeam">Team Attack</a></li>
+          <li><a href="#world" data-i18n="navWorld">World</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-label="More" data-i18n-aria="ftMore">
+        <h3 data-i18n="ftMore">More</h3>
+        <ul>
+          <li><a href="#foes" data-i18n="navFoes">Foes</a></li>
+          <li><a href="#play" data-i18n="navPlay">How to Play</a></li>
+          <li><a href="#crew-team" data-i18n="navMakers">Team</a></li>
+        </ul>
+      </nav>
+      <div class="foot-card">
+        <img src="img/sticker-paws.png" alt="">
+        <b data-i18n="cardH">Wishlist on Steam</b>
+        <p data-i18n="cardP">Add Plunder Paws to your wishlist and help us bring the game to life!</p>
+        <a class="btn btn-primary steam-link" href="#" target="_blank" rel="noopener" data-i18n="cardBtn">Wishlist now</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Cozy Corsairs · Plunder Paws</span>
+      <span data-i18n="footer">In development. Details may change.</span>
+    </div>
   </div>
 </footer>
 
@@ -627,7 +701,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     pg2h:"選單操作", mouse:"滑鼠", click:"點擊", keyboard:"鍵盤", arrows:"方向鍵", controller:"手把", dpad:"十字鍵", back:"返回", or:"或",
     pg3h:"戰鬥畫面", screen:"畫面", screenV:"同一個螢幕，兩人共用鏡頭", hud:"介面", hudV:"血量、能量、金幣、按鍵提示", revive:"救援", hold:"長按", for3:"3 秒",
     makersH:"製作團隊", logoAlt:"Cozy Corsairs 標誌：浪花上的一艘帆船",
-    footer:"開發中，內容可能隨開發調整。"
+    footer:"開發中，內容可能隨開發調整。",
+    banH:"在 Steam 將 Plunder Paws 加入願望清單", banP:"你的願望清單對我們的幫助比你想像的還大！", banBtn:"立即加入 ›",
+    ftAbout:"Cozy Corsairs 團隊製作的可愛雙人合作海盜動作冒險。", ftExplore:"探索", ftMore:"更多",
+    navFoes:"對手", navPlay:"玩法",
+    cardH:"Steam 願望清單", cardP:"把 Plunder Paws 加入願望清單，幫我們把遊戲帶到你面前！", cardBtn:"立即加入"
   };
   var EN = {}, ENALT = {}, ENARIA = {};
   var textNodes = document.querySelectorAll('[data-i18n]');
@@ -653,9 +731,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   btnZh.addEventListener('click', function(){ setLang('zh', true); });
 
   /* ---------- Steam wishlist ---------- */
-  // Until the store page exists the button's href is "#": keep it from jumping to the top.
-  var steamBtn = document.getElementById('steamBtn');
-  if (steamBtn) steamBtn.addEventListener('click', function(e){ if (steamBtn.getAttribute('href') === '#') e.preventDefault(); });
+  // Paste the Steam store page URL here once it exists; every wishlist button on the page uses it.
+  var STEAM_URL = '';
+  document.querySelectorAll('.steam-link').forEach(function(a){
+    if (STEAM_URL) { a.href = STEAM_URL; return; }
+    a.title = 'Steam page coming soon';
+    a.addEventListener('click', function(e){ e.preventDefault(); });
+  });
 
   var saved = null;
   try { saved = localStorage.getItem('pp-lang'); } catch(e){}
