@@ -158,37 +158,7 @@ p{margin:0}
 .contrast .p1{color:var(--ink);font-weight:900}.contrast .p2{color:var(--red);font-weight:900}
 
 /* team attack */
-.demo{background:var(--paper-3);border:3px solid var(--text);border-radius:20px;padding:clamp(20px,4vw,36px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;box-shadow:0 6px 0 var(--text)}
-@media (max-width:860px){.demo{grid-template-columns:1fr}}
-.demo-copy{display:grid;gap:14px;min-width:0}
-.demo-copy h3{font-size:1.5rem;font-weight:900;color:var(--ink)}
-.demo-copy p{color:var(--muted)}
-.rules{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.95rem}
-.rules li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px}
-.rules .w{font-weight:900;font-variant-numeric:tabular-nums}
-.ok{color:var(--leaf)} .meh{color:var(--rope)} .no{color:var(--red)}
-.arena{display:grid;gap:16px;min-width:0}
-.target{background:var(--paper);border-radius:14px;padding:16px 18px;display:grid;gap:10px}
-.target-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.target-name{font-weight:900}
-.target-state{font-family:var(--font-display);letter-spacing:.05em;color:var(--rope)}
-.armor{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.armor i{height:22px;border-radius:6px;background:var(--gold);box-shadow:inset 0 -5px 0 var(--rope);transition:transform .25s,background .25s}
-.armor i.off{background:transparent;box-shadow:inset 0 0 0 2px var(--paper-2);transform:scale(.9)}
-.target.shake{animation:shake .35s}
-@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
-.pads{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pad{appearance:none;border:3px solid var(--text);border-radius:14px;padding:14px 10px;cursor:pointer;display:grid;justify-items:center;font-family:var(--font-body);color:var(--paper-3);touch-action:manipulation;user-select:none;-webkit-user-select:none;box-shadow:0 4px 0 var(--text);transition:transform .06s,box-shadow .06s}
-.pad.hit,.pad:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
-.pad .n{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.04em}
-.pad .k{font-size:.85rem;font-weight:800}
-.pad-paws{background:var(--red)} .pad-plunder{background:var(--ink)}
-.readout{min-height:3.8em;display:grid;gap:2px}
-.readout .res{font-weight:900;font-size:1.1rem}
-.readout .gap{color:var(--muted);font-size:.92rem;font-variant-numeric:tabular-nums}
-.demo-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
-.linkbtn{background:none;border:0;color:var(--ink);font-weight:800;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:4px}
-.combos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:44px}
+.combos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 @media (max-width:900px){.combos{grid-template-columns:1fr}}
 .combo{display:grid;gap:8px;align-content:start;padding-top:16px;border-top:3px dashed var(--ink-soft)}
 .combo .pair{font-family:var(--font-display);letter-spacing:.04em;font-size:1rem;color:var(--rope)}
@@ -302,7 +272,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <li>Unreal Engine 5.7</li>
       </ul>
       <div class="ctas">
-        <a class="btn btn-primary" href="#team-attack" data-i18n="cta1">Try a team attack</a>
+        <!-- Steam: replace href="#" with the store page URL once it exists -->
+        <a class="btn btn-primary" id="steamBtn" href="#" target="_blank" rel="noopener" title="Steam page coming soon" data-i18n="cta1">Wishlist on Steam</a>
         <a class="btn btn-ghost" href="#story" data-i18n="cta2">Read the story</a>
       </div>
     </div>
@@ -443,39 +414,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <span class="scroll">Team Attack</span>
         <h2 data-i18n="taH">You only win when your moves work together</h2>
         <p data-i18n="taP">Most enemies wear armor, and solo hits just bounce off. Time your strikes together, or use your partner as the weapon.</p>
-      </div>
-
-      <div class="demo">
-        <div class="demo-copy">
-          <h3 data-i18n="demoH">Try it: Synchronized Strike</h3>
-          <p data-i18n="demoP">When Paws's sword and Plunder's anchor hit the same enemy almost at once, all of its armor shatters and it gets knocked down. Use one key per hand, or grab a friend and take a side each.</p>
-          <ul class="rules">
-            <li><span class="w ok" data-i18n="r1w">≤ 0.3 s</span><span data-i18n="r1">Synchronized Strike: armor shattered, enemy knocked down.</span></li>
-            <li><span class="w meh" data-i18n="r2w">0.3–0.6 s</span><span data-i18n="r2">A beat late: two layers break and the late attacker tumbles.</span></li>
-            <li><span class="w no" data-i18n="r3w">&gt; 0.6 s</span><span data-i18n="r3">Out of sync: the hit bounces off the armor.</span></li>
-          </ul>
-        </div>
-        <div class="arena">
-          <div class="target" id="target">
-            <div class="target-row">
-              <span class="target-name" data-i18n="targetName">Cursed Rocky Turtle</span>
-              <span class="target-state" id="tstate"></span>
-            </div>
-            <div class="armor" id="armor" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div class="pads">
-            <button class="pad pad-paws" id="padPaws" type="button"><span class="n">PAWS</span><span class="k" data-i18n="padPaws">Sword · press A</span></button>
-            <button class="pad pad-plunder" id="padPlunder" type="button"><span class="n">PLUNDER</span><span class="k" data-i18n="padPlunder">Anchor · press L</span></button>
-          </div>
-          <div class="readout" aria-live="polite">
-            <span class="res" id="res"></span>
-            <span class="gap" id="gap"></span>
-          </div>
-          <div class="demo-foot">
-            <span id="best"></span>
-            <button class="linkbtn" id="reset" type="button" data-i18n="resetBtn">Put the armor back on</button>
-          </div>
-        </div>
       </div>
 
       <div class="combos">
@@ -632,7 +570,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     tagline:"一起出航，來場溫馨又混亂的冒險",
     pitch:"一款可愛的雙人合作海盜動作冒險。你和朋友扮演兩隻動物海盜：一隻小熊貓、一隻浣熊。牠們是溫馨的 2D 貼紙角色，一起駕船穿越色彩繽紛的 3D 群島尋寶。被詛咒的骷髏和巨大的 Boss 擋在你們和黃金之間，搭配彼此的能力打出團隊攻擊，才能贏下戰鬥、帶走寶藏。",
     facts:"遊戲資訊", chip1:"雙人本地合作", chip2:"海盜動作冒險", chip3:"鍵盤滑鼠 / 手把",
-    cta1:"試玩團隊攻擊", cta2:"看故事",
+    cta1:"在 Steam 加入願望清單", cta2:"看故事",
     storyH:"一對兄妹，一桌貼紙，一整片想像的海",
     story1:"Penny 和 Pierce 住在海邊的小島鎮上。哥哥長大了，兄妹倆的興趣越走越遠，兩個人心裡都有點寂寞。",
     story2:"媽媽提議他們像小時候一樣一起玩。Pierce 一開始不太情願，覺得玩貼紙太幼稚；Penny 聽了有點受傷，但還是很高興哥哥願意陪她。於是，他們攤開海盜動物貼紙、玩具和圖畫，開始玩了起來。",
@@ -665,12 +603,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     c1a:"Plunder 大膽", c1b:"Paws 體貼", c2a:"Plunder 追寶藏", c2b:"Paws 守護意義", c3a:"Plunder 裝堅強", c3b:"Paws 看穿他",
     c4a:"Plunder 帶來衝勁", c4b:"Paws 指引方向", c5a:"Plunder 讓冒險刺激", c5b:"Paws 讓冒險有意義",
     taH:"兩人的招式組合在一起，才打得贏", taP:"大部分敵人都穿著護甲，單人攻擊只會被彈開。抓準時機一起出手，或者乾脆把隊友當武器丟出去。",
-    demoH:"試試看：同步打擊",
-    demoP:"Paws 的劍和 Plunder 的錨在極短時間內打中同一個敵人，就能擊碎全部護甲並擊倒牠。一隻手按一個鍵，或找朋友一人一邊。",
-    r1w:"≤ 0.3 秒", r1:"同步打擊成功：護甲全碎，敵人被擊倒。",
-    r2w:"0.3–0.6 秒", r2:"慢了半拍：只敲掉兩層，晚出手的人失手翻滾。",
-    r3w:"&gt; 0.6 秒", r3:"各打各的：攻擊被護甲彈開。",
-    targetName:"被詛咒的岩石海龜", padPaws:"劍擊 · 按 A", padPlunder:"錨擊 · 按 L", resetBtn:"重新穿上護甲",
     co1h:"貼紙球", co1:"玩家 1 用近戰打中玩家 2，玩家 2 會捲成一顆貼紙球飛出去撞向敵人，撞完再變回原樣。",
     co2h:"攻擊組合", co2:"近戰、遠程互相搭配出不同的團隊攻擊。每座 Boss 島嶼都是為其中一種組合設計的考驗。",
     co3h:"救起隊友", co3:"血量歸零不會直接出局。隊友靠近長按 <kbd>F</kbd> 或手把 <kbd>B</kbd> 3 秒就能救起；兩人都倒下就回到港口重整旗鼓。",
@@ -697,21 +629,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     makersH:"製作團隊", logoAlt:"Cozy Corsairs 標誌：浪花上的一艘帆船",
     footer:"開發中，內容可能隨開發調整。"
   };
-  var MSG = {
-    en:{armor:function(n,m){return "Armor "+n+" / "+m;}, down:"Knocked down!", start:"Press either side to start.", gapHint:"The gap between your two hits shows up here.",
-        best:function(ms){return "Best: "+(ms===null?"—":ms+" ms");}, already:"It's already down. Wait for it to armor up again.",
-        sync:"Synchronized Strike! Armor shattered, enemy knocked down.", gap:function(ms){return "Gap: "+ms+" ms";},
-        late:"A beat late. Two layers broke and the late attacker tumbled.", lateGap:function(ms,d){return "Gap: "+ms+" ms. "+d+" ms faster and you'd have it.";},
-        bouncePaws:"Paws's sword bounced off the armor.", bouncePlunder:"Plunder's anchor bounced off the armor.", wait:"Your partner needs to follow within 0.3 s.",
-        rearm:"The turtle armored up again. Go for another one.", reset:"Armor restored."},
-    zh:{armor:function(n,m){return "護甲 "+n+" / "+m;}, down:"擊倒！", start:"按下任一邊開始。", gapHint:"兩次命中的間隔會顯示在這裡。",
-        best:function(ms){return "最佳紀錄："+(ms===null?"—":ms+" 毫秒");}, already:"牠已經倒下了，等牠重新穿上護甲。",
-        sync:"同步打擊！護甲全碎，敵人被擊倒。", gap:function(ms){return "間隔 "+ms+" 毫秒";},
-        late:"慢了半拍，敲掉兩層護甲，晚出手的人失手翻滾。", lateGap:function(ms,d){return "間隔 "+ms+" 毫秒，再快 "+d+" 毫秒就成功";},
-        bouncePaws:"Paws 的劍被護甲彈開了。", bouncePlunder:"Plunder 的錨被護甲彈開了。", wait:"等隊友在 0.3 秒內跟上",
-        rearm:"海龜重新穿上了護甲，再來一次。", reset:"護甲已重置。"}
-  };
-
   var EN = {}, ENALT = {}, ENARIA = {};
   var textNodes = document.querySelectorAll('[data-i18n]');
   var altNodes = document.querySelectorAll('[data-i18n-alt]');
@@ -720,12 +637,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   altNodes.forEach(function(el){ ENALT[el.dataset.i18nAlt] = el.getAttribute('alt'); });
   ariaNodes.forEach(function(el){ ENARIA[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
 
-  var lang = 'en';
   var btnEn = document.getElementById('langEn'), btnZh = document.getElementById('langZh');
-  var lastMsg = null; // {key, args, cls} so a language switch re-renders the current demo line
 
   function setLang(next, save){
-    lang = next;
     var zh = next === 'zh';
     document.documentElement.lang = zh ? 'zh-Hant' : 'en';
     textNodes.forEach(function(el){ var k = el.dataset.i18n; el.innerHTML = zh && ZH[k] != null ? ZH[k] : EN[k]; });
@@ -734,70 +648,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     btnEn.setAttribute('aria-pressed', String(!zh));
     btnZh.setAttribute('aria-pressed', String(zh));
     if (save){ try { localStorage.setItem('pp-lang', next); } catch(e){} }
-    renderDemo();
   }
   btnEn.addEventListener('click', function(){ setLang('en', true); });
   btnZh.addEventListener('click', function(){ setLang('zh', true); });
 
-  /* ---------- Synchronized Strike demo ---------- */
-  var CO_OP = 300, FUMBLE = 600, MAX = 4;
-  var armor = MAX, last = {paws:-1e9, plunder:-1e9}, best = null, resetTimer = null;
-  var pips = document.querySelectorAll('#armor i');
-  var tstate = document.getElementById('tstate');
-  var res = document.getElementById('res');
-  var gapEl = document.getElementById('gap');
-  var bestEl = document.getElementById('best');
-  var target = document.getElementById('target');
-  var pads = {paws:document.getElementById('padPaws'), plunder:document.getElementById('padPlunder')};
-
-  function T(){ return MSG[lang]; }
-  function renderDemo(){
-    var t = T();
-    pips.forEach(function(p,i){ p.classList.toggle('off', i >= armor); });
-    tstate.textContent = armor > 0 ? t.armor(armor, MAX) : t.down;
-    tstate.style.color = armor > 0 ? '' : 'var(--leaf)';
-    bestEl.textContent = t.best(best);
-    if (!lastMsg){ res.textContent = t.start; res.className = 'res'; gapEl.textContent = t.gapHint; return; }
-    var m = lastMsg;
-    res.textContent = t[m.key]; res.className = 'res ' + (m.cls || '');
-    gapEl.textContent = m.gap ? (typeof t[m.gap] === 'function' ? t[m.gap].apply(null, m.args || []) : t[m.gap]) : '—';
-  }
-  function say(key, cls, gapKey, args){ lastMsg = {key:key, cls:cls, gap:gapKey, args:args}; renderDemo(); }
-  function shake(){ target.classList.remove('shake'); void target.offsetWidth; target.classList.add('shake'); }
-  function fullReset(key){ clearTimeout(resetTimer); armor = MAX; last = {paws:-1e9, plunder:-1e9}; say(key, '', 'gapHint'); }
-
-  function hit(who){
-    var other = who === 'paws' ? 'plunder' : 'paws';
-    var now = performance.now();
-    var d = now - last[other];
-    last[who] = now;
-    var pad = pads[who]; pad.classList.add('hit'); setTimeout(function(){ pad.classList.remove('hit'); }, 110);
-    if (armor === 0){ say('already', '', null); return; }
-    var ms = Math.round(d);
-    if (d <= CO_OP){
-      armor = 0; last = {paws:-1e9, plunder:-1e9};
-      if (best === null || ms < best) best = ms;
-      say('sync', 'ok', 'gap', [ms]); shake();
-      clearTimeout(resetTimer);
-      resetTimer = setTimeout(function(){ fullReset('rearm'); }, 2600);
-    } else if (d <= FUMBLE){
-      armor = Math.max(1, armor - 2); last = {paws:-1e9, plunder:-1e9};
-      say('late', 'meh', 'lateGap', [ms, ms - CO_OP]); shake();
-    } else {
-      say(who === 'paws' ? 'bouncePaws' : 'bouncePlunder', 'no', 'wait');
-    }
-  }
-  pads.paws.addEventListener('pointerdown', function(e){ e.preventDefault(); hit('paws'); });
-  pads.plunder.addEventListener('pointerdown', function(e){ e.preventDefault(); hit('plunder'); });
-  [['paws',pads.paws],['plunder',pads.plunder]].forEach(function(p){
-    p[1].addEventListener('keydown', function(e){ if ((e.key === 'Enter' || e.key === ' ') && !e.repeat){ e.preventDefault(); hit(p[0]); } });
-  });
-  document.addEventListener('keydown', function(e){
-    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
-    var k = e.key.toLowerCase();
-    if (k === 'a') hit('paws'); else if (k === 'l') hit('plunder');
-  });
-  document.getElementById('reset').addEventListener('click', function(){ fullReset('reset'); });
+  /* ---------- Steam wishlist ---------- */
+  // Until the store page exists the button's href is "#": keep it from jumping to the top.
+  var steamBtn = document.getElementById('steamBtn');
+  if (steamBtn) steamBtn.addEventListener('click', function(e){ if (steamBtn.getAttribute('href') === '#') e.preventDefault(); });
 
   var saved = null;
   try { saved = localStorage.getItem('pp-lang'); } catch(e){}
