@@ -35,7 +35,7 @@
 }
 html[lang="zh-Hant"]{--font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Nunito",system-ui,sans-serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:clamp(16px,calc(10px + .5vw),19px)} /* type grows a little on wide screens */
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{
   background-color:var(--paper);
@@ -43,27 +43,27 @@ body{
     radial-gradient(ellipse at 12% 8%,rgba(255,250,235,.55),transparent 45%),
     radial-gradient(ellipse at 90% 40%,rgba(160,120,70,.12),transparent 50%),
     radial-gradient(ellipse at 20% 85%,rgba(160,120,70,.10),transparent 45%);
-  color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.75;overflow-x:hidden}
+  color:var(--text);font-family:var(--font-body);font-size:1rem;line-height:1.75;overflow-x:hidden}
 html[lang="zh-Hant"] body{line-height:1.85}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--sea);outline-offset:3px;border-radius:6px}
 img{display:block}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1500px;margin:0 auto;padding-left:max(clamp(16px,4vw,64px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,64px),env(safe-area-inset-right,0px))}
 h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
 p{margin:0}
 .section{padding-block:clamp(56px,8vw,96px)}
 
 /* wooden plank sign: ends (with the nails) keep their shape, the middle grain stretches to fit the words */
 .scroll{display:inline-flex;align-items:center;justify-content:center;min-height:62px;padding:10px 16px 12px;border-style:solid;border-width:0 30px;border-color:#b0723f;border-image:url("img/plank.webp") 0 112 fill / 0 30px stretch;background:transparent;color:#fff4dc;font-family:var(--font-display);font-size:clamp(1.25rem,3vw,1.6rem);letter-spacing:.05em;text-transform:uppercase;text-shadow:0 2px 0 #5a3418,0 0 1px #5a3418;filter:drop-shadow(0 3px 0 rgba(90,55,25,.25));max-width:100%;text-align:center}
-.section-head{display:grid;gap:18px;justify-items:start;max-width:680px;margin-bottom:40px}
+.section-head{display:grid;gap:18px;justify-items:start;max-width:52rem;margin-bottom:40px}
 .section-head h2{font-size:clamp(1.8rem,4.4vw,2.6rem);font-weight:900;color:var(--ink)}
 .section-head p{color:var(--muted)}
 .center{justify-items:center;text-align:center;margin-inline:auto}
 
 /* nav */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(6px);border-bottom:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
-.nav .wrap{max-width:1320px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
 .wordmark{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.03em;text-decoration:none;color:var(--rope);white-space:nowrap}
 .wordmark span{color:var(--leaf)}
 .nav-right{display:flex;align-items:center;gap:10px}
@@ -78,18 +78,13 @@ p{margin:0}
 
 /* hero */
 .hero{position:relative;overflow:hidden}
-.hero .wrap{position:relative;z-index:1;max-width:1320px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,64px);align-items:center;padding-block:clamp(40px,7vw,80px) clamp(48px,7vw,80px)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,4vw,64px);align-items:center;padding-block:clamp(40px,7vw,80px) clamp(48px,7vw,80px)}
 @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
 .hero-copy{display:grid;gap:22px;justify-items:start;min-width:0}
-.title{margin:0;line-height:0;width:min(560px,100%)}
+.title{margin:0;line-height:0;width:min(36rem,100%)}
 .title img{width:100%;height:auto;filter:drop-shadow(0 5px 0 var(--gold))}
-/* hero side art: fills the wide-screen margins, hidden when there is no margin to fill */
-.hero-deco{position:absolute;top:0;bottom:0;width:calc(50% - 650px);pointer-events:none;color:var(--rope);display:none}
-.hero-deco svg{width:100%;height:100%}
-.hero-deco.l{left:0}.hero-deco.r{right:0}
-@media (min-width:1480px){.hero-deco{display:block}}
 .tagline{font-family:var(--font-display);font-size:clamp(1.25rem,2.8vw,1.6rem);color:var(--ink);letter-spacing:.03em}
-.pitch{max-width:52ch}
+.pitch{max-width:64ch}
 .chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
 .chips li{border:2px solid var(--ink);color:var(--ink);border-radius:999px;padding:2px 14px;font-size:.88rem;font-weight:800;background:var(--paper-3)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
@@ -98,7 +93,7 @@ p{margin:0}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
 .btn-primary{background:var(--gold);color:var(--text)}
 .btn-ghost{background:var(--paper-3);color:var(--ink)}
-.stickers{position:relative;aspect-ratio:1/0.9;width:min(620px,100%);max-width:100%;justify-self:center}
+.stickers{position:relative;aspect-ratio:1/0.9;width:min(40rem,100%);max-width:100%;justify-self:center}
 .stickers .island{position:absolute;inset:18% 4% 4% 4%;border-radius:46% 54% 40% 60%/55% 45% 55% 45%;background:var(--leaf);opacity:.22}
 .stickers .x{position:absolute;right:10%;top:8%;font-family:var(--font-display);font-size:3rem;color:var(--red);transform:rotate(-8deg)}
 .stickers img{position:absolute;width:52%;filter:drop-shadow(0 6px 0 rgba(80,55,25,.28))}
@@ -265,54 +260,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-deco l" aria-hidden="true">
-    <svg viewBox="0 0 260 760" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <g id="pp-paw"><ellipse cx="0" cy="6" rx="9" ry="8"/><circle cx="-10" cy="-5" r="3.6"/><circle cx="-4" cy="-11" r="3.8"/><circle cx="4" cy="-11" r="3.8"/><circle cx="10" cy="-5" r="3.6"/></g>
-      </defs>
-      <g transform="translate(130 130)" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".55">
-        <circle r="62" stroke-dasharray="4 7"/><circle r="44"/>
-        <path d="M0-80 10-10 0 0-10-10Z M0 80 10 10 0 0-10 10Z" fill="var(--red)" fill-opacity=".55"/>
-        <path d="M-80 0-10-10 0 0-10 10Z M80 0 10-10 0 0 10 10Z" fill="currentColor" fill-opacity=".35"/>
-        <text y="-88" text-anchor="middle" font-family="var(--font-display)" font-size="20" fill="currentColor" stroke="none">N</text>
-      </g>
-      <path d="M150 250 C 60 320, 210 390, 110 470 S 150 640, 70 720" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" opacity=".5"/>
-      <g fill="var(--ink-soft)" opacity=".4">
-        <use href="#pp-paw" transform="translate(118 300) rotate(-35)"/>
-        <use href="#pp-paw" transform="translate(150 350) rotate(-10)"/>
-        <use href="#pp-paw" transform="translate(132 420) rotate(25)"/>
-        <use href="#pp-paw" transform="translate(98 470) rotate(5)"/>
-        <use href="#pp-paw" transform="translate(126 545) rotate(-20)"/>
-        <use href="#pp-paw" transform="translate(96 610) rotate(10)"/>
-        <use href="#pp-paw" transform="translate(110 680) rotate(-15)"/>
-      </g>
-      <g fill="var(--gold)" opacity=".8">
-        <path d="M40 260l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
-        <path d="M215 520l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
-        <path d="M200 280l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z"/>
-      </g>
-    </svg>
-  </div>
-  <div class="hero-deco r" aria-hidden="true">
-    <svg viewBox="0 0 260 760" preserveAspectRatio="xMidYMid meet">
-      <path d="M60 60 C 200 120, 40 240, 170 330 S 90 520, 160 600" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="10 10" stroke-linecap="round" opacity=".5"/>
-      <g stroke="var(--red)" stroke-width="7" stroke-linecap="round" opacity=".75"><path d="M146 586l30 30M176 586l-30 30"/></g>
-      <g transform="translate(110 180) rotate(-12)" fill="none" stroke="var(--ink-soft)" stroke-width="5" stroke-linecap="round" opacity=".45">
-        <circle cy="-42" r="9"/><path d="M0-33V40M-22-18H22M-38 14C-34 36-16 46 0 46S34 36 38 14"/><path d="M-44 18l6-8 6 8M32 18l6-8 6 8"/>
-      </g>
-      <g fill="var(--gold)" stroke="var(--rope)" stroke-width="2.5" opacity=".85">
-        <ellipse cx="70" cy="430" rx="16" ry="14"/><ellipse cx="92" cy="448" rx="16" ry="14"/><ellipse cx="62" cy="456" rx="16" ry="14"/>
-      </g>
-      <g fill="none" stroke="var(--sea, currentColor)" stroke-width="3" stroke-linecap="round" opacity=".45">
-        <path d="M20 700q20-14 40 0t40 0 40 0 40 0 40 0 40 0"/>
-        <path d="M50 730q20-14 40 0t40 0 40 0 40 0 40 0"/>
-      </g>
-      <g fill="var(--gold)" opacity=".8">
-        <path d="M210 100l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
-        <path d="M40 320l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
-      </g>
-    </svg>
-  </div>
   <div class="wrap">
     <div class="hero-copy">
       <h1 class="title"><img src="img/title.png" width="1200" height="431" alt="Plunder Paws"></h1>
