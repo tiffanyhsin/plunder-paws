@@ -102,31 +102,15 @@ p{margin:0}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
 .btn-primary{background:var(--gold);color:var(--text)}
 .btn-ghost{background:var(--paper-3);color:var(--ink)}
-/* hero scene: an endless beach walk. Layers scroll at different speeds (set from JS); the walkers stay put */
-.voyage{position:relative;width:min(36rem,100%);aspect-ratio:4/3;justify-self:center;overflow:hidden;border:3px solid var(--text);border-radius:24px;box-shadow:0 6px 0 var(--text);background:linear-gradient(180deg,#a9e2f7 0%,#e2f6fc 52%);cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
-.v-sun{position:absolute;top:9%;right:11%;width:12%;aspect-ratio:1;border-radius:50%;background:var(--gold);border:3px solid var(--text);box-shadow:0 0 0 10px rgba(255,255,255,.45)}
-.v-layer{position:absolute;left:0;right:0;background-repeat:repeat-x}
-.v-clouds{top:5%;height:30%;background-size:auto 100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 140'%3E%3Cg fill='%23fff' stroke='%2318283a' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M40 100Q18 100 22 80Q26 64 46 66Q50 40 80 42Q104 28 124 52Q150 48 154 74Q172 80 166 96Q162 102 150 102Z'/%3E%3Cpath d='M300 64Q284 64 287 50Q290 38 305 40Q309 22 330 24Q348 14 362 32Q382 30 384 48Q396 52 392 62Q389 66 380 66Z'/%3E%3C/g%3E%3C/svg%3E")}
-.v-isles{top:43%;height:12%;background-size:auto 100%;background-position-y:bottom;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 80'%3E%3Cg fill='%2387cbdc'%3E%3Cpath d='M30 80Q60 30 110 36Q150 20 190 80Z'/%3E%3Cpath d='M330 80Q350 52 380 54Q400 40 430 80Z'/%3E%3Cpath d='M520 80Q560 10 610 40Q630 50 640 80Z'/%3E%3Cpath d='M118 36Q116 18 124 6M124 6Q110 4 104 14M124 6Q138 2 144 12' stroke='%2387cbdc' stroke-width='4' fill='none'/%3E%3C/g%3E%3C/svg%3E")}
-.v-sea{top:54%;height:20%;background-color:#56bcd8;background-size:120px 100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 60' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' opacity='.55'%3E%3Cpath d='M10 18q10-7 20 0'/%3E%3Cpath d='M70 40q10-7 20 0'/%3E%3C/g%3E%3C/svg%3E");border-top:3px solid var(--text)}
-.v-foam{top:71%;height:5%;background-size:60px 100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 20' preserveAspectRatio='none'%3E%3Cpath d='M0 20V10Q15 0 30 10T60 10V20Z' fill='%23fff'/%3E%3C/svg%3E")}
-.v-sand{top:75%;bottom:0;background-color:#f7e1a8;background-size:auto 100%;border-top:3px solid var(--text);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100'%3E%3Cg fill='%23e5c27a'%3E%3Cellipse cx='40' cy='30' rx='6' ry='3'/%3E%3Cellipse cx='150' cy='70' rx='8' ry='4'/%3E%3Cellipse cx='250' cy='40' rx='5' ry='2.5'/%3E%3Cellipse cx='95' cy='82' rx='4' ry='2'/%3E%3C/g%3E%3Cpath d='M205 72q6-10 12 0z' fill='%23ffd2c2' stroke='%2318283a' stroke-width='2'/%3E%3C/svg%3E")}
-.v-prop{position:absolute;left:0;bottom:9%;height:13%;aspect-ratio:var(--ar);will-change:transform;transform:translateX(-200%)}
-.v-prop svg{display:block;width:100%;height:100%;overflow:visible}
-.v-palm{height:50%;bottom:17%;z-index:0}
-.v-walker{position:absolute;bottom:8%;z-index:2;line-height:0}
-.v-walker img{height:100%;width:auto;position:relative}
-.v-paws{left:6%;height:38%}
-.v-paws img{transform:translateY(2.8%)}
-.v-plunder{left:52%;height:45%}
-.v-plunder img{transform:translateY(.7%)}
-.v-shadow{position:absolute;left:50%;bottom:-3%;width:46%;height:7%;transform:translateX(-50%);border-radius:50%;background:rgba(24,40,58,.22)}
-.v-paws .v-shadow{left:70%}
-.v-walker.jump{animation:vjump .72s}
-.v-walker.jump .v-shadow{animation:vshadow .72s}
-@keyframes vjump{0%{transform:translateY(0);animation-timing-function:cubic-bezier(.2,.7,.4,1)}50%{transform:translateY(-62%);animation-timing-function:cubic-bezier(.6,0,.8,.3)}100%{transform:translateY(0)}}
-@keyframes vshadow{50%{transform:translateX(-50%) translateY(886%) scale(.55);opacity:.5}}
-.v-hint{position:absolute;left:12px;top:12px;z-index:3;background:#fff;border:3px solid var(--text);border-radius:999px;padding:0 12px;font-family:var(--font-display);font-size:.85rem;letter-spacing:.04em;color:var(--text);box-shadow:0 3px 0 var(--text)}
+/* hero: the two heroes walking in place, standing on soft shadows. Widths keep their true relative size */
+.walkers{display:flex;align-items:flex-end;justify-content:center;gap:2%;width:min(30rem,100%);justify-self:center;padding-bottom:6px}
+.v-walker{position:relative;line-height:0}
+.v-walker img{display:block;width:100%;height:auto;position:relative}
+.v-paws{width:51%}
+.v-paws img{transform:translateY(2.8%)}  /* Paws's frames have a little air below the feet */
+.v-plunder{width:45.5%}
+.v-shadow{position:absolute;left:50%;bottom:-2%;width:56%;height:6%;transform:translateX(-50%);border-radius:50%;background:rgba(24,40,58,.18)}
+.v-paws .v-shadow{left:66%}
 
 /* story */
 .story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:start}
@@ -310,7 +294,6 @@ footer{background:var(--paper-2)}
 /* hero: shallow lagoon with a sandy treasure island, rolling into the page with a wave */
 .hero{background:linear-gradient(180deg,#d2f1fb 0%,#ade3f2 75%,#94d8eb 100%);padding-bottom:26px}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V14C27 0 53 0 80 14S133 28 160 14V26Z' fill='%23e3f4f8'/%3E%3C/svg%3E") repeat-x;background-size:160px 26px}
-.voyage.played .v-hint{opacity:0;transition:opacity .4s}
 /* Libre Bodoni subtitles: bold, no extra tracking; the hero tagline in italic */
 .section-head h2,.combo h3,.foe h3,.ctable h3,.foot-card b{font-weight:700;letter-spacing:0}
 .tagline,.foot-brand .tag{font-style:italic;font-weight:600;letter-spacing:0}
@@ -353,22 +336,10 @@ footer{background:var(--paper-2)}
         <a class="btn btn-ghost" href="#story" data-i18n="cta2">Read the story</a>
       </div>
     </div>
-    <!-- endless beach walk (runner-game style): the pair walks in place while the world scrolls; click to jump -->
-    <div class="voyage" id="voyage" role="img" aria-label="Paws and Plunder walking along the beach" data-i18n-aria="voyageAlt">
-      <span class="v-sun"></span>
-      <div class="v-layer v-clouds" data-speed=".12"></div>
-      <div class="v-layer v-isles" data-speed=".3"></div>
-      <div class="v-layer v-sea" data-speed=".55"></div>
-      <div class="v-layer v-foam" data-speed=".8"></div>
-      <div class="v-layer v-sand" data-speed="1"></div>
-      <div class="v-prop v-palm" data-kind="deco" style="--ar:120/220"><svg viewBox="0 0 120 220"><path d="M62 216Q48 140 70 70" fill="none" stroke="#18283a" stroke-width="17" stroke-linecap="round"/><path d="M62 216Q48 140 70 70" fill="none" stroke="#b5713a" stroke-width="9" stroke-linecap="round"/><g fill="#4f9d32" stroke="#18283a" stroke-width="4" stroke-linejoin="round"><path d="M70 70Q40 40 6 58Q34 46 70 70Z"/><path d="M70 70Q96 36 118 56Q94 46 70 70Z"/><path d="M70 70Q60 24 28 14Q58 30 70 70Z"/><path d="M70 70Q88 22 112 18Q86 36 70 70Z"/><path d="M70 70Q48 70 30 100Q52 78 70 70Z"/></g><circle cx="66" cy="76" r="7" fill="#7a4a24" stroke="#18283a" stroke-width="3"/></svg></div>
-      <div class="v-prop" data-kind="hop" style="--ar:60/70"><svg viewBox="0 0 60 70"><path d="M10 6Q30-1 50 6Q59 35 50 64Q30 71 10 64Q1 35 10 6Z" fill="#b5713a" stroke="#18283a" stroke-width="4"/><path d="M5 24Q30 31 55 24M5 46Q30 53 55 46" fill="none" stroke="#18283a" stroke-width="4"/><path d="M5 24Q30 31 55 24M5 46Q30 53 55 46" fill="none" stroke="#ffb72b" stroke-width="1.5"/></svg></div>
-      <div class="v-prop" data-kind="hop" style="--ar:80/50"><svg viewBox="0 0 80 50"><path d="M5 47Q3 26 20 18Q31 4 49 10Q71 12 75 47Z" fill="#a8b4bf" stroke="#18283a" stroke-width="4"/><path d="M25 24Q33 18 40 25" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
-      <div class="v-prop" data-kind="hop" style="--ar:1"><svg viewBox="0 0 60 60"><rect x="4" y="4" width="52" height="52" rx="6" fill="#c98a4b" stroke="#18283a" stroke-width="4"/><path d="M6 21H54M6 39H54M14 6L46 54" fill="none" stroke="#18283a" stroke-width="3.5"/></svg></div>
-      <div class="v-prop" data-kind="hop" style="--ar:80/60"><svg viewBox="0 0 80 60"><path d="M6 27Q40 1 74 27V56H6Z" fill="#a85f2c" stroke="#18283a" stroke-width="4" stroke-linejoin="round"/><path d="M6 29H74" stroke="#18283a" stroke-width="4"/><path d="M20 13V56M60 13V56" stroke="#ffb72b" stroke-width="5"/><path d="M20 13V56M60 13V56" stroke="#18283a" stroke-width="1.5" opacity=".5"/><rect x="34" y="22" width="12" height="16" rx="2" fill="#ffb72b" stroke="#18283a" stroke-width="3"/></svg></div>
-      <div class="v-walker v-paws" data-feet=".6,.86"><span class="v-shadow"></span><img src="img/paws-walk.webp" width="343" height="356" alt=""></div>
-      <div class="v-walker v-plunder" data-feet=".32,.76"><span class="v-shadow"></span><img src="img/plunder-walk.webp" width="306" height="420" alt=""></div>
-      <span class="v-hint" data-i18n="voyageHint">Click to jump!</span>
+    <!-- the two heroes walking in place (looping walk-cycle WebPs) -->
+    <div class="walkers" role="img" aria-label="Paws and Plunder walking side by side" data-i18n-aria="voyageAlt">
+      <div class="v-walker v-paws"><span class="v-shadow"></span><img src="img/paws-walk.webp" width="343" height="356" alt=""></div>
+      <div class="v-walker v-plunder"><span class="v-shadow"></span><img src="img/plunder-walk.webp" width="306" height="420" alt=""></div>
     </div>
   </div>
 </header>
@@ -764,7 +735,7 @@ footer{background:var(--paper-2)}
     banH:"在 Steam 將 Plunder Paws 加入願望清單", banP:"你的願望清單對我們的幫助比你想像的還大！", banBtn:"立即加入 ›",
     ftAbout:"Cozy Corsairs 團隊製作的可愛雙人合作海盜動作冒險。", ftExplore:"探索", ftMore:"更多",
     navFoes:"對手", navPlay:"玩法",
-    voyageAlt:"Paws 和 Plunder 沿著海灘一直走", voyageHint:"點一下跳起來！",
+    voyageAlt:"Paws 和 Plunder 並肩走路",
     cardH:"Steam 願望清單", cardP:"把 Plunder Paws 加入願望清單，幫我們把遊戲帶到你面前！", cardBtn:"立即加入"
   };
   var EN = {}, ENALT = {}, ENARIA = {};
@@ -798,111 +769,6 @@ footer{background:var(--paper-2)}
     a.title = 'Steam page coming soon';
     a.addEventListener('click', function(e){ e.preventDefault(); });
   });
-
-  /* ---------- hero beach walk ---------- */
-  // The walkers stay put; the world scrolls under them. Props come in from the right,
-  // each walker hops when one reaches its feet, and a click makes both jump.
-  (function(){
-    var scene = document.querySelector('.voyage');
-    if (!scene) return;
-    var layers = [].map.call(scene.querySelectorAll('.v-layer'), function(el){ return { el: el, f: parseFloat(el.dataset.speed) }; });
-    var props = [].map.call(scene.querySelectorAll('.v-prop'), function(el){ return { el: el, deco: el.dataset.kind === 'deco', x: 0, w: 0, hit: [] }; });
-    var walkers = [].map.call(scene.querySelectorAll('.v-walker'), function(el){
-      var f = el.dataset.feet.split(',').map(Number);
-      return { el: el, f0: f[0], f1: f[1], busy: false };
-    });
-    var JUMP = 0.72, W = 0, H = 0, speed = 0, dist = 0, last = 0, running = false, visible = true, raf = 0;
-
-    function jump(w){
-      if (w.busy) return;
-      w.busy = true;
-      w.el.classList.add('jump');
-    }
-    walkers.forEach(function(w){
-      w.el.addEventListener('animationend', function(e){
-        if (e.target !== w.el) return;
-        w.el.classList.remove('jump'); w.busy = false;
-      });
-    });
-    scene.addEventListener('click', function(){
-      walkers.forEach(jump);
-      scene.classList.add('played');
-    });
-
-    function rand(a, b){ return a + Math.random() * (b - a); }
-    function place(p, from){
-      p.x = from;
-      p.hit = [];
-    }
-    function rightmostHop(){
-      var r = -Infinity;
-      props.forEach(function(p){ if (!p.deco) r = Math.max(r, p.x + p.w); });
-      return r;
-    }
-    function layout(){
-      var r = scene.getBoundingClientRect();
-      W = r.width; H = r.height;
-      speed = H * 0.36;  // px per second, tuned so the feet do not slide on the sand
-      props.forEach(function(p){ p.w = p.el.getBoundingClientRect().width; });
-    }
-    function reset(){
-      layout();
-      var x = W * 0.95;
-      // shuffle the hop props so the order differs per visit
-      var hops = props.filter(function(p){ return !p.deco; }).sort(function(){ return Math.random() - 0.5; });
-      hops.forEach(function(p){ place(p, x); x += p.w + rand(W * 0.55, W * 1.1); });
-      props.forEach(function(p){ if (p.deco) place(p, W * 0.3); });
-    }
-
-    function step(t){
-      raf = 0;
-      if (!running) return;
-      var dt = last ? Math.min((t - last) / 1000, 0.05) : 0;
-      last = t;
-      var dx = speed * dt;
-      dist += dx;
-      layers.forEach(function(l){ l.el.style.backgroundPositionX = (-dist * l.f).toFixed(1) + 'px'; });
-      props.forEach(function(p){
-        p.x -= dx;
-        if (p.x + p.w < 0){
-          if (p.deco) place(p, W + rand(W * 0.4, W * 1.2));
-          else place(p, Math.max(W, rightmostHop()) + rand(W * 0.55, W * 1.1));
-        }
-        p.el.style.transform = 'translateX(' + p.x.toFixed(1) + 'px)';
-        if (p.deco) return;
-        // hop so the top of the arc lands over the prop's middle
-        var mid = p.x + p.w / 2;
-        walkers.forEach(function(w, i){
-          if (p.hit[i]) return;
-          var wr = w.el.offsetLeft, ww = w.el.offsetWidth;
-          var feet = wr + ww * (w.f0 + w.f1) / 2;
-          if (mid - feet <= speed * JUMP * 0.5 + p.w * 0.1){ p.hit[i] = true; jump(w); }
-        });
-      });
-      raf = requestAnimationFrame(step);
-    }
-    function update(){
-      var go = visible && !document.hidden;
-      if (go === running) return;
-      running = go; last = 0;
-      if (go && !raf) raf = requestAnimationFrame(step);
-    }
-
-    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    reset();
-    if (still){
-      // no scrolling: just set a barrel down between the two
-      var p = props.filter(function(p){ return !p.deco; })[0];
-      p.el.style.transform = 'translateX(' + (W * 0.36) + 'px)';
-      return;
-    }
-    window.addEventListener('resize', function(){ var oldW = W; layout(); if (oldW) props.forEach(function(p){ p.x *= W / oldW; }); });
-    document.addEventListener('visibilitychange', update);
-    if ('IntersectionObserver' in window){
-      new IntersectionObserver(function(es){ visible = es[0].isIntersecting; update(); }).observe(scene);
-    }
-    update();
-  })();
 
   var saved = null;
   try { saved = localStorage.getItem('pp-lang'); } catch(e){}
