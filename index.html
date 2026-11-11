@@ -109,8 +109,6 @@ p{margin:0}
 .v-paws{width:51%}
 .v-paws img{transform:translateY(2.8%)}  /* Paws's frames have a little air below the feet */
 .v-plunder{width:45.5%}
-.v-shadow{position:absolute;left:50%;bottom:-2%;width:56%;height:6%;transform:translateX(-50%);border-radius:50%;background:rgba(24,40,58,.18)}
-.v-paws .v-shadow{left:66%}
 
 /* story */
 .story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,4vw,56px);align-items:start}
@@ -338,8 +336,8 @@ footer{background:var(--paper-2)}
     </div>
     <!-- the two heroes walking in place (looping walk-cycle WebPs) -->
     <div class="walkers" role="img" aria-label="Paws and Plunder walking side by side" data-i18n-aria="voyageAlt">
-      <div class="v-walker v-paws"><span class="v-shadow"></span><img src="img/paws-walk.webp" width="343" height="356" alt=""></div>
-      <div class="v-walker v-plunder"><span class="v-shadow"></span><img src="img/plunder-walk.webp" width="306" height="420" alt=""></div>
+      <div class="v-walker v-paws"><img src="img/paws-walk.webp" width="343" height="356" alt=""></div>
+      <div class="v-walker v-plunder"><img src="img/plunder-walk.webp" width="306" height="420" alt=""></div>
     </div>
   </div>
 </header>
