@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Plunder Paws</title>
+  <meta name="description" content="Plunder Paws is a cute, co-op pirate action adventure. Two animal pirates, a red panda and a raccoon, sail a colorful 3D island world and combine team attacks to claim the treasure.">
+  <meta property="og:title" content="Plunder Paws">
+  <meta property="og:description" content="Plunder Paws is a cute, co-op pirate action adventure. Two animal pirates, a red panda and a raccoon, sail a colorful 3D island world and combine team attacks to claim the treasure.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ece0c4">
+  <link rel="icon" type="image/png" href="img/sticker-plunder.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+  <style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
+  <style>
+/* Layout: 一張攤開的藏寶圖。羊皮紙底、捲軸標題、藍色虛線，貼紙角色貼在紙上。依 Creative Direction Deck 的配色，刻意固定為單一淺色紙面。英文為預設，可切換繁體中文。 */
+:root{
+  --paper:#ece0c4;
+  --paper-2:#e2d2ae;
+  --paper-3:#f6eedb;
+  --ink:#2f4a6b;
+  --ink-soft:#5b6f86;
+  --text:#3b3226;
+  --muted:#6e604c;
+  --leaf:#5c8a34;
+  --rope:#8a5a33;
+  --red:#c8442f;
+  --sea:#2c86c4;
+  --gold:#e3a93a;
+  --font-display:"Lilita One","Arial Rounded MT Bold","Noto Sans TC",sans-serif;
+  --font-body:"Nunito","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  color-scheme:light;
+}
+html[lang="zh-Hant"]{--font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Nunito",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(ellipse at 12% 8%,rgba(255,250,235,.55),transparent 45%),
+    radial-gradient(ellipse at 90% 40%,rgba(160,120,70,.12),transparent 50%),
+    radial-gradient(ellipse at 20% 85%,rgba(160,120,70,.10),transparent 45%);
+  color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.75;overflow-x:hidden}
+html[lang="zh-Hant"] body{line-height:1.85}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sea);outline-offset:3px;border-radius:6px}
+img{display:block}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+p{margin:0}
+.section{padding-block:clamp(56px,8vw,96px)}
+
+/* wooden plank sign: ends (with the nails) keep their shape, the middle grain stretches to fit the words */
+.scroll{display:inline-flex;align-items:center;justify-content:center;min-height:62px;padding:10px 16px 12px;border-style:solid;border-width:0 30px;border-color:#b0723f;border-image:url("img/plank.webp") 0 112 fill / 0 30px stretch;background:transparent;color:#fff4dc;font-family:var(--font-display);font-size:clamp(1.25rem,3vw,1.6rem);letter-spacing:.05em;text-transform:uppercase;text-shadow:0 2px 0 #5a3418,0 0 1px #5a3418;filter:drop-shadow(0 3px 0 rgba(90,55,25,.25));max-width:100%;text-align:center}
+.section-head{display:grid;gap:18px;justify-items:start;max-width:680px;margin-bottom:40px}
+.section-head h2{font-size:clamp(1.8rem,4.4vw,2.6rem);font-weight:900;color:var(--ink)}
+.section-head p{color:var(--muted)}
+.center{justify-items:center;text-align:center;margin-inline:auto}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(6px);border-bottom:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.wordmark{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.03em;text-decoration:none;color:var(--rope);white-space:nowrap}
+.wordmark span{color:var(--leaf)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.nav a.link{display:block;padding:4px 12px;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:800;font-size:.95rem}
+.nav a.link:hover{background:var(--paper-2)}
+@media (max-width:860px){.nav ul{display:none}}
+.lang{display:inline-flex;border:2px solid var(--text);border-radius:10px;overflow:hidden;box-shadow:0 3px 0 var(--text);background:var(--paper-3)}
+.lang button{appearance:none;border:0;background:transparent;color:var(--text);font-family:var(--font-body);font-weight:900;font-size:.9rem;padding:4px 12px;cursor:pointer;line-height:1.5}
+.lang button + button{border-left:2px solid var(--text)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper-3)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:clamp(40px,7vw,80px) clamp(48px,7vw,80px)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+.hero-copy{display:grid;gap:22px;justify-items:start;min-width:0}
+.title{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(3.8rem,11vw,7rem);letter-spacing:.01em}
+.title .a{display:block;color:var(--gold);-webkit-text-stroke:3px #6f4325;paint-order:stroke fill;text-shadow:0 5px 0 #6f4325}
+.title .b{display:block;color:var(--leaf);-webkit-text-stroke:3px #2f4a1f;paint-order:stroke fill;text-shadow:0 5px 0 #2f4a1f;padding-left:.5em}
+.tagline{font-family:var(--font-display);font-size:clamp(1.25rem,2.8vw,1.6rem);color:var(--ink);letter-spacing:.03em}
+.pitch{max-width:52ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.chips li{border:2px solid var(--ink);color:var(--ink);border-radius:999px;padding:2px 14px;font-size:.88rem;font-weight:800;background:var(--paper-3)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;font-family:var(--font-display);font-size:1.15rem;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;padding:10px 22px;border-radius:12px;border:3px solid var(--text);cursor:pointer;box-shadow:0 4px 0 var(--text);transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--text)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
+.btn-primary{background:var(--gold);color:var(--text)}
+.btn-ghost{background:var(--paper-3);color:var(--ink)}
+.stickers{position:relative;aspect-ratio:1/0.9;width:min(500px,100%);max-width:100%;justify-self:center}
+.stickers .island{position:absolute;inset:18% 4% 4% 4%;border-radius:46% 54% 40% 60%/55% 45% 55% 45%;background:var(--leaf);opacity:.22}
+.stickers .x{position:absolute;right:10%;top:8%;font-family:var(--font-display);font-size:3rem;color:var(--red);transform:rotate(-8deg)}
+.stickers img{position:absolute;width:52%;filter:drop-shadow(0 6px 0 rgba(80,55,25,.28))}
+.stickers .s-paws{left:2%;bottom:4%;transform:rotate(-6deg);animation:wob 4s ease-in-out infinite}
+.stickers .s-plunder{right:0;bottom:8%;transform:rotate(5deg);animation:wob2 4s ease-in-out -2s infinite}
+@keyframes wob{50%{transform:rotate(-3deg) translateY(-8px)}}
+@keyframes wob2{50%{transform:rotate(8deg) translateY(-8px)}}
+
+/* story */
+.story-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:start}
+@media (max-width:860px){.story-grid{grid-template-columns:1fr}}
+.story-text{display:grid;gap:16px;max-width:64ch}
+.story-text .big{font-size:1.2rem;font-weight:800;color:var(--ink)}
+.kids{display:grid;gap:16px}
+.kid{background:var(--paper-3);border:2px solid var(--paper-2);border-radius:14px;padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center;transform:rotate(-.6deg)}
+.kid:nth-child(2){transform:rotate(.6deg)}
+.kid .age{grid-row:span 2;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.5rem;color:var(--paper-3)}
+.kid.pierce .age{background:var(--ink)}
+.kid.penny .age{background:var(--red)}
+.kid b{font-size:1.1rem}
+.kid b small{font-weight:600;color:var(--muted);font-size:.85rem;margin-left:6px}
+.kid span{color:var(--muted);font-size:.93rem;line-height:1.6}
+.motto{margin-top:8px;padding:14px 22px;border-left:4px dashed var(--rope);font-family:var(--font-display);font-size:1.3rem;letter-spacing:.02em;color:var(--rope)}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:860px){.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.pillars{grid-template-columns:1fr}}
+.pillar{display:grid;gap:8px;align-content:start;text-align:center;justify-items:center;padding:20px 16px}
+.pillar svg{width:44px;height:64px}
+.pillar svg *{fill:var(--paper-3);stroke:var(--ink-soft);stroke-width:2}
+.pillar h3{font-family:var(--font-display);font-weight:400;color:var(--leaf);font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
+.pillar p{color:var(--muted);font-size:.93rem;line-height:1.65}
+.feeling{margin-top:32px;text-align:center;font-weight:800;color:var(--ink)}
+.feeling em{font-style:normal;color:var(--red)}
+
+/* crew */
+.crew-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+@media (max-width:860px){.crew-grid{grid-template-columns:1fr}}
+.crew{background:var(--paper-3);border-radius:18px;padding:28px;display:grid;gap:18px;align-content:start;box-shadow:0 3px 0 var(--paper-2)}
+.crew-top{display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;align-items:center}
+@media (max-width:420px){.crew-top{grid-template-columns:96px minmax(0,1fr)}.crew-top img{width:96px}}
+.crew-top img{width:130px;height:auto;filter:drop-shadow(0 4px 0 rgba(80,55,25,.25))}
+.crew .who{font-family:var(--font-display);letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase}
+.crew.paws .who{color:var(--red)} .crew.plunder .who{color:var(--ink)}
+.crew h3{font-family:var(--font-display);font-weight:400;font-size:2.6rem;line-height:1;color:var(--text)}
+.crew .traits{color:var(--muted);font-size:.9rem;line-height:1.6;margin-top:6px}
+.moves{list-style:none;margin:0;padding:0;border-top:2px dashed var(--paper-2)}
+.moves li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;padding-block:12px;border-bottom:2px dashed var(--paper-2)}
+.moves .slot{font-weight:900;font-size:.85rem;color:var(--rope);padding-top:2px}
+.moves b{display:block}
+.moves span{display:block;color:var(--muted);font-size:.92rem;line-height:1.6}
+.weapon{font-size:.88rem;font-weight:800;color:var(--ink-soft)}
+.banter{margin-top:28px;display:grid;gap:10px;max-width:560px;margin-inline:auto}
+.bubble{position:relative;background:var(--paper-3);border:2px solid var(--text);border-radius:18px;padding:10px 18px;max-width:85%;font-weight:800}
+.bubble small{display:block;font-family:var(--font-display);font-weight:400;font-size:.85rem;letter-spacing:.04em}
+.bubble.l{justify-self:start;border-bottom-left-radius:4px}.bubble.l small{color:var(--ink)}
+.bubble.r{justify-self:end;border-bottom-right-radius:4px}.bubble.r small{color:var(--red)}
+.contrast{margin-top:36px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;list-style:none;padding:0}
+@media (max-width:860px){.contrast{grid-template-columns:1fr}}
+.contrast li{display:grid;gap:2px;text-align:center;padding:12px;border-top:2px dashed var(--ink-soft);font-size:.92rem}
+.contrast .p1{color:var(--ink);font-weight:900}.contrast .p2{color:var(--red);font-weight:900}
+
+/* team attack */
+.demo{background:var(--paper-3);border:3px solid var(--text);border-radius:20px;padding:clamp(20px,4vw,36px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;box-shadow:0 6px 0 var(--text)}
+@media (max-width:860px){.demo{grid-template-columns:1fr}}
+.demo-copy{display:grid;gap:14px;min-width:0}
+.demo-copy h3{font-size:1.5rem;font-weight:900;color:var(--ink)}
+.demo-copy p{color:var(--muted)}
+.rules{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.95rem}
+.rules li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px}
+.rules .w{font-weight:900;font-variant-numeric:tabular-nums}
+.ok{color:var(--leaf)} .meh{color:var(--rope)} .no{color:var(--red)}
+.arena{display:grid;gap:16px;min-width:0}
+.target{background:var(--paper);border-radius:14px;padding:16px 18px;display:grid;gap:10px}
+.target-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.target-name{font-weight:900}
+.target-state{font-family:var(--font-display);letter-spacing:.05em;color:var(--rope)}
+.armor{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.armor i{height:22px;border-radius:6px;background:var(--gold);box-shadow:inset 0 -5px 0 var(--rope);transition:transform .25s,background .25s}
+.armor i.off{background:transparent;box-shadow:inset 0 0 0 2px var(--paper-2);transform:scale(.9)}
+.target.shake{animation:shake .35s}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pad{appearance:none;border:3px solid var(--text);border-radius:14px;padding:14px 10px;cursor:pointer;display:grid;justify-items:center;font-family:var(--font-body);color:var(--paper-3);touch-action:manipulation;user-select:none;-webkit-user-select:none;box-shadow:0 4px 0 var(--text);transition:transform .06s,box-shadow .06s}
+.pad.hit,.pad:active{transform:translateY(3px);box-shadow:0 1px 0 var(--text)}
+.pad .n{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.04em}
+.pad .k{font-size:.85rem;font-weight:800}
+.pad-paws{background:var(--red)} .pad-plunder{background:var(--ink)}
+.readout{min-height:3.8em;display:grid;gap:2px}
+.readout .res{font-weight:900;font-size:1.1rem}
+.readout .gap{color:var(--muted);font-size:.92rem;font-variant-numeric:tabular-nums}
+.demo-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;color:var(--ink);font-weight:800;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit;padding:4px}
+.combos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:44px}
+@media (max-width:900px){.combos{grid-template-columns:1fr}}
+.combo{display:grid;gap:8px;align-content:start;padding-top:16px;border-top:3px dashed var(--ink-soft)}
+.combo .pair{font-family:var(--font-display);letter-spacing:.04em;font-size:1rem;color:var(--rope)}
+.combo h3{font-size:1.2rem;font-weight:900;color:var(--ink)}
+.combo p{color:var(--muted);font-size:.95rem}
+
+/* world */
+.world-shot{border:6px solid var(--paper-3);border-radius:6px;box-shadow:0 8px 0 rgba(80,55,25,.2);transform:rotate(-.8deg);overflow:hidden;max-width:100%}
+.world-shot img{width:100%;height:auto;aspect-ratio:1400/791;object-fit:cover}
+.world-cap{font-size:.88rem;color:var(--muted);margin-top:12px;text-align:center}
+.world-top{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;margin-bottom:56px}
+@media (max-width:860px){.world-top{grid-template-columns:1fr}}
+.loop{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.loop li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.loop .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.2rem;color:var(--paper-3)}
+.loop b{display:block;color:var(--ink)}
+.loop span{color:var(--muted);font-size:.93rem;line-height:1.6}
+.biomes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
+@media (max-width:860px){.biomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.biomes{grid-template-columns:1fr}}
+.biome{border-radius:42% 58% 50% 50%/40% 45% 55% 60%;padding:28px 22px 26px;display:grid;gap:8px;justify-items:center;text-align:center;align-content:start;min-height:220px}
+.biome:nth-child(2){border-radius:55% 45% 48% 52%/50% 40% 60% 50%}
+.biome:nth-child(3){border-radius:48% 52% 60% 40%/45% 55% 45% 55%}
+.biome:nth-child(4){border-radius:60% 40% 45% 55%/55% 50% 50% 45%}
+.biome.tropic{background:color-mix(in srgb,var(--leaf) 26%,var(--paper))}
+.biome.under{background:color-mix(in srgb,var(--sea) 24%,var(--paper))}
+.biome.frozen{background:color-mix(in srgb,#9cc3dc 40%,var(--paper))}
+.biome.volcano{background:color-mix(in srgb,var(--red) 22%,var(--paper))}
+.biome h3{font-size:1.15rem;font-weight:900}
+.biome .lv{display:flex;gap:8px}
+.biome .lv span{font-family:var(--font-display);font-size:.95rem;padding:2px 10px;border-radius:999px;background:var(--paper-3);color:var(--ink);border:2px solid var(--ink)}
+.biome .lv span.boss{background:var(--text);color:var(--paper-3);border-color:var(--text)}
+.biome p{font-size:.9rem;color:var(--muted);line-height:1.6}
+.hub-start{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:28px;text-align:center}
+.hub-start b{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--red);letter-spacing:.04em}
+.hub-start span{color:var(--muted);font-size:.95rem}
+.final{margin-top:32px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;background:var(--text);color:var(--paper-3);border-radius:18px;padding:22px 26px}
+.final .skull{font-family:var(--font-display);font-size:2.6rem;color:var(--gold);line-height:1}
+.final b{display:block;font-size:1.15rem}
+.final span{color:color-mix(in srgb,var(--paper-3) 75%,var(--text));font-size:.94rem}
+
+/* foes */
+.foes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:900px){.foes{grid-template-columns:1fr}}
+.foe{background:var(--paper-3);border-radius:16px;padding:22px;display:grid;gap:10px;align-content:start}
+.foe .rank{font-family:var(--font-display);letter-spacing:.05em;font-size:.95rem;color:var(--red)}
+.foe .rank.minor{color:var(--ink-soft)}
+.foe h3{font-size:1.35rem;font-weight:900;color:var(--ink)}
+.foe .shell{display:flex;gap:5px;align-items:center;font-size:.85rem;color:var(--muted)}
+.foe .shell i{width:16px;height:10px;border-radius:3px;background:var(--gold);box-shadow:inset 0 -3px 0 var(--rope)}
+.foe .shell i.off{background:var(--paper-2);box-shadow:none}
+.foe p{color:var(--muted);font-size:.95rem}
+
+/* play */
+.play-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:900px){.play-grid{grid-template-columns:1fr}}
+.ctable{background:var(--paper-3);border-radius:16px;padding:20px 22px;min-width:0}
+.ctable h3{font-size:1.1rem;font-weight:900;color:var(--ink);margin-bottom:6px}
+.ctable dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px}
+.ctable dt,.ctable dd{margin:0;padding-block:9px;border-bottom:2px dashed var(--paper-2);font-size:.94rem}
+.ctable dt{color:var(--muted)}
+.ctable ol{margin:0;padding-left:1.3em;display:grid;gap:6px;font-size:.94rem}
+kbd{font-family:var(--font-display);font-size:.9rem;letter-spacing:.03em;background:var(--paper);border:2px solid var(--text);border-bottom-width:4px;border-radius:6px;padding:0 7px;white-space:nowrap}
+
+/* team */
+.team{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:760px){.team{grid-template-columns:1fr;justify-items:center}}
+.team img{width:150px;height:auto}
+.crewlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.crewlist{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}}
+@media (max-width:420px){.crewlist{grid-template-columns:1fr}}
+.crewlist li{background:var(--paper-3);padding:12px 18px;display:grid;position:relative;box-shadow:0 2px 0 rgba(90,60,30,.2)}
+.crewlist li::before,.crewlist li::after{content:"";position:absolute;top:-4px;bottom:-4px;width:8px;border-radius:4px;background:var(--rope)}
+.crewlist li::before{left:-4px}.crewlist li::after{right:-4px}
+.crewlist b{font-size:1.02rem}
+.crewlist span{color:var(--muted);font-size:.88rem}
+footer{border-top:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:26px;color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main" data-i18n-aria="nav">
+  <div class="wrap">
+    <a class="wordmark" href="#top">PLUNDER <span>PAWS</span></a>
+    <div class="nav-right">
+      <ul>
+        <li><a class="link" href="#story" data-i18n="navStory">Story</a></li>
+        <li><a class="link" href="#crew" data-i18n="navCrew">Crew</a></li>
+        <li><a class="link" href="#team-attack" data-i18n="navTeam">Team Attack</a></li>
+        <li><a class="link" href="#world" data-i18n="navWorld">World</a></li>
+        <li><a class="link" href="#crew-team" data-i18n="navMakers">Team</a></li>
+      </ul>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="langEn" aria-pressed="true" lang="en">EN</button>
+        <button type="button" id="langZh" aria-pressed="false" lang="zh-Hant">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 class="title" aria-label="Plunder Paws"><span class="a">PLUNDER</span><span class="b">PAWS</span></h1>
+      <p class="tagline" data-i18n="tagline">Set sail together for cozy chaos</p>
+      <p class="pitch" data-i18n="pitch">A cute, co-op pirate action adventure. You and a friend play as two animal pirates, a red panda and a raccoon: cozy little 2D sticker characters who sail together across a colorful 3D island world in a hunt for treasure. Cursed skeletons and huge bosses stand between you and your gold. Combine your abilities in team attacks to win the battle and claim the treasure.</p>
+      <ul class="chips" aria-label="Game facts" data-i18n-aria="facts">
+        <li data-i18n="chip1">2-player local co-op</li>
+        <li data-i18n="chip2">Pirate action adventure</li>
+        <li data-i18n="chip3">Keyboard &amp; mouse / Controller</li>
+        <li>Unreal Engine 5.7</li>
+      </ul>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#team-attack" data-i18n="cta1">Try a team attack</a>
+        <a class="btn btn-ghost" href="#story" data-i18n="cta2">Read the story</a>
+      </div>
+    </div>
+    <div class="stickers" aria-hidden="true">
+      <div class="island"></div>
+      <span class="x">X</span>
+      <img class="s-paws" src="img/sticker-paws.png" alt="">
+      <img class="s-plunder" src="img/sticker-plunder.png" alt="">
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="story">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">Narrative</span>
+        <h2 data-i18n="storyH">Two siblings, a table of stickers, and a whole imaginary sea</h2>
+      </div>
+      <div class="story-grid">
+        <div class="story-text">
+          <p class="big" data-i18n="story1">Penny and Pierce live in an island town near the beach. As Pierce has grown older, their interests have drifted apart, and both of them have ended up feeling a little lonely.</p>
+          <p data-i18n="story2">Mom suggests they play together like they used to. Pierce resists at first because it makes him feel like a kid. Penny is hurt to hear it, but glad to have the company. So they spread out their pirate animal stickers, toys and drawings, and begin to play.</p>
+          <p data-i18n="story3">Their shared imagination brings the play to life. You step into the kids' imaginary world and set sail on a cozy, chaotic treasure hunt. The story opens and closes with animated cinematics, and short cutscenes with characters and speech bubbles come before each level.</p>
+          <p class="motto">He teaches her to leap. She teaches him to land.</p>
+        </div>
+        <div class="kids">
+          <div class="kid pierce">
+            <span class="age">14</span>
+            <b>Pierce<small data-i18n="pierceTag">Big brother · plays Plunder</small></b>
+            <span data-i18n="pierceTxt">Caught between childhood and growing up. Likes action, challenge and competition. A bit embarrassed to play pretend at first, but he loves his sister and gets pulled into the adventure.</span>
+          </div>
+          <div class="kid penny">
+            <span class="age">8</span>
+            <b>Penny<small data-i18n="pennyTag">Little sister · plays Paws</small></b>
+            <span data-i18n="pennyTxt">Imaginative, warm and emotionally open. She fully believes in the sticker world they make together, and gives the adventure its heart, its names, its rules and its sense of wonder.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pillars">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="scroll">Four Pillars</span>
+        <h2 data-i18n="pillarsH">Two players talking to each other to solve combat challenges together, in a chaotically fun world</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <svg viewBox="0 0 44 64" aria-hidden="true"><rect x="4" y="2" width="36" height="8" rx="2"/><rect x="10" y="10" width="24" height="44" rx="2"/><rect x="4" y="54" width="36" height="8" rx="2"/></svg>
+          <h3 data-i18n="pl1h">Cute Animals</h3>
+          <p data-i18n="pl1">Collectible stickers come to life: thick outlines, simple shapes, expressive faces. Something a kid puts on a notebook and an adult buys as a vinyl sticker.</p>
+        </div>
+        <div class="pillar">
+          <svg viewBox="0 0 44 64" aria-hidden="true"><rect x="4" y="2" width="36" height="8" rx="2"/><rect x="10" y="10" width="24" height="44" rx="2"/><rect x="4" y="54" width="36" height="8" rx="2"/></svg>
+          <h3 data-i18n="pl2h">Co-op Play</h3>
+          <p data-i18n="pl2">Fight side by side, call out plans and pick each other up. Plenty of fights you can't win alone are easy together.</p>
+        </div>
+        <div class="pillar">
+          <svg viewBox="0 0 44 64" aria-hidden="true"><rect x="4" y="2" width="36" height="8" rx="2"/><rect x="10" y="10" width="24" height="44" rx="2"/><rect x="4" y="54" width="36" height="8" rx="2"/></svg>
+          <h3 data-i18n="pl3h">Chaotic Fun</h3>
+          <p data-i18n="pl3">Smack your partner into a sticker ball, fumble a combo and tumble, both go down and wash back to port. The chaos is the fun.</p>
+        </div>
+        <div class="pillar">
+          <svg viewBox="0 0 44 64" aria-hidden="true"><rect x="4" y="2" width="36" height="8" rx="2"/><rect x="10" y="10" width="24" height="44" rx="2"/><rect x="4" y="54" width="36" height="8" rx="2"/></svg>
+          <h3 data-i18n="pl4h">Action Combat</h3>
+          <p data-i18n="pl4">Melee, dash, ranged and charged attacks. Enemies wind up before they strike, so read the tell, dodge and hit back.</p>
+        </div>
+      </div>
+      <p class="feeling" data-i18n="feeling">Players should feel <em>happy, surprised, and eager to collaborate</em>. They should smile, laugh and connect.</p>
+    </div>
+  </section>
+
+  <section class="section" id="crew">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">The Crew</span>
+        <h2 data-i18n="crewH">True co-stars, not hero and sidekick</h2>
+        <p data-i18n="crewP">Their differences don't get in the way of teamwork. Their differences are the reason the team works.</p>
+      </div>
+      <div class="crew-grid">
+        <article class="crew paws">
+          <div class="crew-top">
+            <img src="img/sticker-paws.png" alt="Paws the red panda sticker: green bandana, green vest, ringed tail" data-i18n-alt="pawsAlt">
+            <div>
+              <p class="who">Red Panda Explorer</p>
+              <h3>PAWS</h3>
+              <p class="traits" data-i18n="pawsTraits">Kind, brave, curious, observant, quietly fearless</p>
+            </div>
+          </div>
+          <p data-i18n="pawsTxt">A brave red panda explorer who believes adventure is better when everyone makes it home together. She notices what others miss, comforts frightened creatures and stands her ground when her friends are in danger. She may look softer than Plunder, but she is not weak or passive.</p>
+          <p class="weapon" data-i18n="pawsWeapon">Current playtest weapon: Sword · quick strikes</p>
+          <ul class="moves">
+            <li><span class="slot" data-i18n="slotN">Attack</span><div><b data-i18n="pm1">Triple Quick Slash</b><span data-i18n="pm1d">A three-hit arc combo. The third slash knocks enemies back a little.</span></div></li>
+            <li><span class="slot" data-i18n="slotA">Skill A</span><div><b data-i18n="pm2">Feint Slash</b><span data-i18n="pm2d">Lunge through a crowd, marking enemies for 3s and confusing them for 0.8s.</span></div></li>
+            <li><span class="slot" data-i18n="slotB">Skill B</span><div><b data-i18n="pm3">Phantom Blade Dash</b><span data-i18n="pm3d">Blink between nearby enemies slashing each one, invincible the whole time.</span></div></li>
+          </ul>
+        </article>
+        <article class="crew plunder">
+          <div class="crew-top">
+            <img src="img/sticker-plunder.png" alt="Plunder the raccoon sticker: pirate tricorn hat, blue coat" data-i18n-alt="plunderAlt">
+            <div>
+              <p class="who">Raccoon Pirate</p>
+              <h3>PLUNDER</h3>
+              <p class="traits" data-i18n="plunderTraits">Scrappy, funny, impulsive, dramatic, competitive, loyal, treasure-obsessed, secretly tender</p>
+            </div>
+          </div>
+          <p data-i18n="plunderTxt">A mischievous raccoon pirate who believes every problem can be solved with quick paws, clever tricks and a little dramatic overconfidence. He is the more chaotic half of the duo. His raccoon markings already give him a bandit look, but he's a lovable rascal, not a villain.</p>
+          <p class="weapon" data-i18n="plunderWeapon">Current playtest weapon: Anchor · heavy hitter</p>
+          <ul class="moves">
+            <li><span class="slot" data-i18n="slotN">Attack</span><div><b data-i18n="am1">Double Sweep</b><span data-i18n="am1d">Two wide sweeps. The second one sends enemies flying about 3 meters.</span></div></li>
+            <li><span class="slot" data-i18n="slotA">Skill A</span><div><b data-i18n="am2">Seaquake</b><span data-i18n="am2d">Slam the ground to launch enemies and slow them on landing. The shockwave ignores parries.</span></div></li>
+            <li><span class="slot" data-i18n="slotB">Skill B</span><div><b data-i18n="am3">Overhead Slam</b><span data-i18n="am3d">A charged slam worth 4× a sword hit. Hold a full charge until your partner is ready.</span></div></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="banter" aria-label="Dialogue" data-i18n-aria="banter">
+        <p class="bubble l"><small>Plunder</small><span data-i18n="b1">"I have a plan!"</span></p>
+        <p class="bubble r"><small>Paws</small><span data-i18n="b2">"Is it a good plan?"</span></p>
+        <p class="bubble l"><small>Plunder</small><span data-i18n="b3">"That part is still loading."</span></p>
+      </div>
+
+      <ul class="contrast">
+        <li><span class="p1" data-i18n="c1a">Plunder is bold.</span><span class="p2" data-i18n="c1b">Paws is thoughtful.</span></li>
+        <li><span class="p1" data-i18n="c2a">Plunder chases treasure.</span><span class="p2" data-i18n="c2b">Paws protects meaning.</span></li>
+        <li><span class="p1" data-i18n="c3a">Plunder acts tough.</span><span class="p2" data-i18n="c3b">Paws sees through him.</span></li>
+        <li><span class="p1" data-i18n="c4a">Plunder brings momentum.</span><span class="p2" data-i18n="c4b">Paws brings direction.</span></li>
+        <li><span class="p1" data-i18n="c5a">Plunder makes it exciting.</span><span class="p2" data-i18n="c5b">Paws makes it matter.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="team-attack">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">Team Attack</span>
+        <h2 data-i18n="taH">You only win when your moves work together</h2>
+        <p data-i18n="taP">Most enemies wear armor, and solo hits just bounce off. Time your strikes together, or use your partner as the weapon.</p>
+      </div>
+
+      <div class="demo">
+        <div class="demo-copy">
+          <h3 data-i18n="demoH">Try it: Synchronized Strike</h3>
+          <p data-i18n="demoP">When Paws's sword and Plunder's anchor hit the same enemy almost at once, all of its armor shatters and it gets knocked down. Use one key per hand, or grab a friend and take a side each.</p>
+          <ul class="rules">
+            <li><span class="w ok" data-i18n="r1w">≤ 0.3 s</span><span data-i18n="r1">Synchronized Strike: armor shattered, enemy knocked down.</span></li>
+            <li><span class="w meh" data-i18n="r2w">0.3–0.6 s</span><span data-i18n="r2">A beat late: two layers break and the late attacker tumbles.</span></li>
+            <li><span class="w no" data-i18n="r3w">&gt; 0.6 s</span><span data-i18n="r3">Out of sync: the hit bounces off the armor.</span></li>
+          </ul>
+        </div>
+        <div class="arena">
+          <div class="target" id="target">
+            <div class="target-row">
+              <span class="target-name" data-i18n="targetName">Cursed Rocky Turtle</span>
+              <span class="target-state" id="tstate"></span>
+            </div>
+            <div class="armor" id="armor" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="pads">
+            <button class="pad pad-paws" id="padPaws" type="button"><span class="n">PAWS</span><span class="k" data-i18n="padPaws">Sword · press A</span></button>
+            <button class="pad pad-plunder" id="padPlunder" type="button"><span class="n">PLUNDER</span><span class="k" data-i18n="padPlunder">Anchor · press L</span></button>
+          </div>
+          <div class="readout" aria-live="polite">
+            <span class="res" id="res"></span>
+            <span class="gap" id="gap"></span>
+          </div>
+          <div class="demo-foot">
+            <span id="best"></span>
+            <button class="linkbtn" id="reset" type="button" data-i18n="resetBtn">Put the armor back on</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="combos">
+        <article class="combo">
+          <p class="pair">MELEE × PLAYER</p>
+          <h3 data-i18n="co1h">Sticker Ball</h3>
+          <p data-i18n="co1">Player 1 hits Player 2 with a melee attack. Player 2 curls into a sticker ball, rockets into an enemy, then pops back to normal.</p>
+        </article>
+        <article class="combo">
+          <p class="pair">MELEE × MELEE · MELEE × RANGED · RANGED × RANGED</p>
+          <h3 data-i18n="co2h">Attack Combinations</h3>
+          <p data-i18n="co2">Mix melee and ranged moves into different team attacks. Each boss island is built to test one of these pairings.</p>
+        </article>
+        <article class="combo">
+          <p class="pair">REVIVE</p>
+          <h3 data-i18n="co3h">Pick Each Other Up</h3>
+          <p data-i18n="co3">Hitting zero health doesn't knock you out of the game. Your partner walks over and holds <kbd>F</kbd> or controller <kbd>B</kbd> for 3 seconds to revive you. If both of you go down, you wash back to port.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="world">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">The World</span>
+        <h2 data-i18n="worldH">2D sticker heroes, cozy 3D islands</h2>
+      </div>
+      <div class="world-top">
+        <div>
+          <div class="world-shot"><img src="img/hub.jpg" alt="In-game Hub Island: sand, rocks, palm trees, a pirate ship and wooden signs reading PLAY and Dummy Practice" data-i18n-alt="hubAlt" loading="lazy"></div>
+          <p class="world-cap" data-i18n="hubCap">Hub Island, captured in-engine. Characters are 3D models with 3D animation, rendered as 2D sticker sprites in 8 directions.</p>
+        </div>
+        <ul class="loop">
+          <li><span class="ic" style="background:var(--gold);color:var(--text)">$</span><div><b data-i18n="lp1h">Beat enemy waves, earn gold</b><span data-i18n="lp1">Every wave drops treasure.</span></div></li>
+          <li><span class="ic" style="background:var(--red)">!</span><div><b data-i18n="lp2h">Defeat bosses, unlock gear</b><span data-i18n="lp2">Cutlass, hammer and harpoon, plus abilities like dash attack, fire attack, cannonball and fireball.</span></div></li>
+          <li><span class="ic" style="background:var(--leaf)">⚓</span><div><b data-i18n="lp3h">Shop at the port</b><span data-i18n="lp3">Spend gold with the merchant, then practice team attacks at the training grounds before you sail.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="hub-start"><b>HUB ISLAND</b><span data-i18n="hubStart">Tropical port · merchant · training tutorial. Every voyage starts here.</span></div>
+      <ol class="biomes">
+        <li class="biome tropic"><div class="lv"><span>Lv.1</span><span class="boss">Lv.2</span></div><h3 data-i18n="bi1h">Tropical Island</h3><p data-i18n="bi1">Explore beaches and jungle, then face the first boss.</p></li>
+        <li class="biome under"><div class="lv"><span>Lv.3</span><span class="boss">Lv.4</span></div><h3 data-i18n="bi2h">Underwater</h3><p data-i18n="bi2">Dive below the waves and fight in an undersea arena.</p></li>
+        <li class="biome frozen"><div class="lv"><span>Lv.5</span><span class="boss">Lv.6</span></div><h3 data-i18n="bi3h">Frozen Mountain</h3><p data-i18n="bi3">Climb an icy island with a boss waiting at the top.</p></li>
+        <li class="biome volcano"><div class="lv"><span>Lv.7</span><span class="boss">Lv.8</span></div><h3 data-i18n="bi4h">Volcano</h3><p data-i18n="bi4">The last expedition and the final showdown, among the lava.</p></li>
+      </ol>
+      <div class="final">
+        <span class="skull" aria-hidden="true">✕✕</span>
+        <div><b data-i18n="finalH">Final bosses: the Evil Raccoon and the Evil Red Panda</b><span data-i18n="finalP">Two bosses at once, and they use team attacks too.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="foes">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">Foes</span>
+        <h2 data-i18n="foesH">Foes in the current playtest</h2>
+        <p data-i18n="foesP">Enemies come in plain and armored versions, melee and ranged. Every attack has a clear wind-up, and that's your cue to dodge.</p>
+      </div>
+      <div class="foes">
+        <article class="foe">
+          <p class="rank">BOSS</p>
+          <h3 data-i18n="f1h">Rocky Turtle</h3>
+          <p class="shell"><i></i><i></i><i></i><i></i> <span data-i18n="heavy">Heavy armor</span></p>
+          <p data-i18n="f1">Glows with a curse while its armor holds. Swings a pickaxe, leaps into the water with a big splash and sends rock waves along the ground. Break its shell and it will try to armor up again.</p>
+        </article>
+        <article class="foe">
+          <p class="rank">BOSS</p>
+          <h3 data-i18n="f2h">Hermit Crab</h3>
+          <p class="shell"><i></i><i></i><i></i><i class="off"></i> <span data-i18n="medium">Medium armor</span></p>
+          <p data-i18n="f2">A shoreline bully with giant claws. It raises a claw to charge before it strikes. Dodge, then crack its shell together.</p>
+        </article>
+        <article class="foe">
+          <p class="rank minor" data-i18n="minion">MINION</p>
+          <h3 data-i18n="f3h">Frog Warrior</h3>
+          <p class="shell"><i></i><i class="off"></i><i class="off"></i><i class="off"></i> <span data-i18n="light">Light armor</span></p>
+          <p data-i18n="f3">Swarms in groups and goes after whoever is still standing. Herd them together with Plunder's Double Sweep and clear them in one go.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="play">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="scroll">How to Play</span>
+        <h2 data-i18n="playH">Two players, one screen</h2>
+      </div>
+      <div class="play-grid">
+        <div class="ctable">
+          <h3 data-i18n="pg1h">Before you sail</h3>
+          <ol>
+            <li data-i18n="pg1a">Player 1 picks a character, then keyboard &amp; mouse or claims a controller</li>
+            <li data-i18n="pg1b">Player 2 does the same. A taken character can't be picked twice</li>
+            <li data-i18n="pg1c">When both are ready, hit "Set Sail" to head to port</li>
+          </ol>
+        </div>
+        <div class="ctable">
+          <h3 data-i18n="pg2h">Menu controls</h3>
+          <dl>
+            <dt data-i18n="mouse">Mouse</dt><dd data-i18n="click">Click</dd>
+            <dt data-i18n="keyboard">Keyboard</dt><dd><span data-i18n="arrows">Arrow keys</span> + <kbd>Enter</kbd></dd>
+            <dt data-i18n="controller">Controller</dt><dd><span data-i18n="dpad">D-pad</span> + <kbd>A</kbd></dd>
+            <dt data-i18n="back">Back</dt><dd><kbd>Esc</kbd> <span data-i18n="or">or</span> <kbd>B</kbd></dd>
+          </dl>
+        </div>
+        <div class="ctable">
+          <h3 data-i18n="pg3h">In battle</h3>
+          <dl>
+            <dt data-i18n="screen">Screen</dt><dd data-i18n="screenV">Shared screen, one camera</dd>
+            <dt data-i18n="hud">HUD</dt><dd data-i18n="hudV">Health, energy, gold, button prompts</dd>
+            <dt data-i18n="revive">Revive</dt><dd><span data-i18n="hold">Hold</span> <kbd>F</kbd> / <kbd>B</kbd> <span data-i18n="for3">for 3 s</span></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="crew-team">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="scroll">Cozy Corsairs Team</span>
+        <h2 data-i18n="makersH">Made by</h2>
+      </div>
+      <div class="team">
+        <img src="img/logo.png" alt="Cozy Corsairs logo: a sailing ship on a curling wave" data-i18n-alt="logoAlt">
+        <ul class="crewlist">
+          <li><b>Tommy Cheely</b><span>Creative Director</span></li>
+          <li><b>Tiffany Hsin</b><span>Project Manager</span></li>
+          <li><b>Bob Zhang</b><span>Lead Gameplay Engineer</span></li>
+          <li><b>Charlie Liu</b><span>Gameplay Engineer</span></li>
+          <li><b>Izan Zhou Lu</b><span>Gameplay Engineer</span></li>
+          <li><b>Ash Yang</b><span>Character Tech Artist</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Plunder Paws · Cozy Corsairs</span>
+    <span data-i18n="footer">In development. Details may change.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- i18n ---------- */
+  var ZH = {
+    nav:"主選單", navStory:"故事", navCrew:"船員", navTeam:"團隊攻擊", navWorld:"世界", navMakers:"製作團隊",
+    tagline:"一起出航，來場溫馨又混亂的冒險",
+    pitch:"一款可愛的雙人合作海盜動作冒險。你和朋友扮演兩隻動物海盜：一隻小熊貓、一隻浣熊。牠們是溫馨的 2D 貼紙角色，一起駕船穿越色彩繽紛的 3D 群島尋寶。被詛咒的骷髏和巨大的 Boss 擋在你們和黃金之間，搭配彼此的能力打出團隊攻擊，才能贏下戰鬥、帶走寶藏。",
+    facts:"遊戲資訊", chip1:"雙人本地合作", chip2:"海盜動作冒險", chip3:"鍵盤滑鼠 / 手把",
+    cta1:"試玩團隊攻擊", cta2:"看故事",
+    storyH:"一對兄妹，一桌貼紙，一整片想像的海",
+    story1:"Penny 和 Pierce 住在海邊的小島鎮上。哥哥長大了，兄妹倆的興趣越走越遠，兩個人心裡都有點寂寞。",
+    story2:"媽媽提議他們像小時候一樣一起玩。Pierce 一開始不太情願，覺得玩貼紙太幼稚；Penny 聽了有點受傷，但還是很高興哥哥願意陪她。於是，他們攤開海盜動物貼紙、玩具和圖畫，開始玩了起來。",
+    story3:"兩人共同的想像讓遊戲活了過來。玩家走進孩子們的想像世界，揚帆出發，展開一場溫馨又混亂的尋寶冒險。故事以動畫開場和結尾，每一關前會有角色和對話框組成的短過場。",
+    pierceTag:"哥哥 · 化身 Plunder", pierceTxt:"卡在童年和長大之間，喜歡動作、挑戰和競爭。一開始覺得玩扮家家酒有點丟臉，但他愛妹妹，最後還是被拉進冒險。",
+    pennyTag:"妹妹 · 化身 Paws", pennyTxt:"想像力豐富、溫暖又直率，完全相信兩人一起創造的貼紙世界。冒險的名字、規則和那份驚奇，都是她給的。",
+    pillarsH:"兩個玩家互相溝通，在一團歡樂的混亂中一起解決戰鬥",
+    pl1h:"可愛動物", pl1:"像會動起來的收藏貼紙：粗輪廓、簡單造型、表情豐富，小孩想貼在筆記本上，大人也想買來收藏。",
+    pl2h:"合作遊玩", pl2:"兩人並肩作戰、互相喊戰術、互相救援。很多一個人過不去的關，兩個人一起就行。",
+    pl3h:"歡樂混亂", pl3:"把隊友打成貼紙球丟出去、連招慢半拍失手翻滾、兩人一起倒地被送回港口，混亂本身就是樂趣。",
+    pl4h:"動作戰鬥", pl4:"近戰、衝刺、遠程與蓄力攻擊。敵人出招前有明顯預備動作，看準時機閃避再反擊。",
+    feeling:"玩家應該感到<em>開心、驚喜，想和對方合作</em>。會笑出來，也會更靠近彼此。",
+    crewH:"真正的雙主角，不是英雄和跟班", crewP:"兩人的差異不會妨礙合作，正是因為不一樣，這個團隊才行得通。",
+    pawsAlt:"小熊貓 Paws 的貼紙造型：綠色頭巾、綠背心、環紋尾巴",
+    pawsTraits:"善良、勇敢、好奇、細心、安靜地無所畏懼",
+    pawsTxt:"勇敢的小熊貓探險家，相信冒險最棒的結局是大家一起回家。她會注意到別人錯過的細節，安撫受驚的小生物，朋友有危險時寸步不讓。看起來比 Plunder 溫柔，但一點也不軟弱。",
+    pawsWeapon:"目前試玩版的武器：長劍 · 快攻型",
+    slotN:"普攻", slotA:"技能 A", slotB:"技能 B",
+    pm1:"三連快斬", pm1d:"弧形三段連擊，第三刀把敵人稍微擊退。",
+    pm2:"佯攻斬", pm2d:"突進穿過敵群，標記敵人 3 秒、讓牠混亂 0.8 秒。",
+    pm3:"幻影刃衝", pm3d:"在附近的敵人之間瞬移連斬，全程無敵。",
+    plunderAlt:"浣熊 Plunder 的貼紙造型：海盜三角帽、藍色外套",
+    plunderTraits:"機靈、搞笑、衝動、愛演、好勝、忠誠、愛寶藏，心其實很軟",
+    plunderTxt:"調皮的浣熊海盜，相信任何問題都能靠快手、小聰明，再加一點戲劇性的過度自信解決。他是兩人中比較混亂的那一半，天生的浣熊花紋讓他看起來像個小強盜，但他是討人喜歡的搗蛋鬼，不是壞人。",
+    plunderWeapon:"目前試玩版的武器：船錨 · 重擊型",
+    am1:"雙重橫掃", am1d:"兩段橫掃，第二下把敵人掃飛約 3 公尺。",
+    am2:"海嘯震地", am2d:"重擊地面掀飛敵人，落地後減速，震波無視格擋。",
+    am3:"過頂重砸", am3d:"蓄力重擊，傷害是劍的 4 倍，滿蓄力可以按住等隊友。",
+    banter:"角色對話", b1:"「我有個計畫！」", b2:"「是個好計畫嗎？」", b3:"「那部分還在讀取中。」",
+    c1a:"Plunder 大膽", c1b:"Paws 體貼", c2a:"Plunder 追寶藏", c2b:"Paws 守護意義", c3a:"Plunder 裝堅強", c3b:"Paws 看穿他",
+    c4a:"Plunder 帶來衝勁", c4b:"Paws 指引方向", c5a:"Plunder 讓冒險刺激", c5b:"Paws 讓冒險有意義",
+    taH:"兩人的招式組合在一起，才打得贏", taP:"大部分敵人都穿著護甲，單人攻擊只會被彈開。抓準時機一起出手，或者乾脆把隊友當武器丟出去。",
+    demoH:"試試看：同步打擊",
+    demoP:"Paws 的劍和 Plunder 的錨在極短時間內打中同一個敵人，就能擊碎全部護甲並擊倒牠。一隻手按一個鍵，或找朋友一人一邊。",
+    r1w:"≤ 0.3 秒", r1:"同步打擊成功：護甲全碎，敵人被擊倒。",
+    r2w:"0.3–0.6 秒", r2:"慢了半拍：只敲掉兩層，晚出手的人失手翻滾。",
+    r3w:"&gt; 0.6 秒", r3:"各打各的：攻擊被護甲彈開。",
+    targetName:"被詛咒的岩石海龜", padPaws:"劍擊 · 按 A", padPlunder:"錨擊 · 按 L", resetBtn:"重新穿上護甲",
+    co1h:"貼紙球", co1:"玩家 1 用近戰打中玩家 2，玩家 2 會捲成一顆貼紙球飛出去撞向敵人，撞完再變回原樣。",
+    co2h:"攻擊組合", co2:"近戰、遠程互相搭配出不同的團隊攻擊。每座 Boss 島嶼都是為其中一種組合設計的考驗。",
+    co3h:"救起隊友", co3:"血量歸零不會直接出局。隊友靠近長按 <kbd>F</kbd> 或手把 <kbd>B</kbd> 3 秒就能救起；兩人都倒下就回到港口重整旗鼓。",
+    worldH:"2D 貼紙角色，3D 溫馨島嶼",
+    hubAlt:"遊戲中的港口島：沙灘、岩石、棕櫚樹、海盜船，以及寫著 PLAY 和 Dummy Practice 的木牌",
+    hubCap:"港口島（Hub）實機畫面。角色是 3D 模型加 3D 動畫，再渲染成 8 方向的 2D 貼紙精靈。",
+    lp1h:"擊退敵人波次，賺取金幣", lp1:"每一波敵人都會掉落寶藏。",
+    lp2h:"打倒 Boss，解鎖新裝備", lp2:"彎刀、鐵鎚、魚叉，以及衝刺攻擊、火焰攻擊、砲彈、火球等能力。",
+    lp3h:"回港口採購", lp3:"用金幣向商人購買武器和能力，出航前先在訓練場練好團隊攻擊。",
+    hubStart:"熱帶港口 · 商人 · 訓練教學，每趟航程都從這裡出發。",
+    bi1h:"熱帶島嶼", bi1:"探索海灘和叢林，再迎戰第一隻 Boss。",
+    bi2h:"海底世界", bi2:"潛入浪花之下，在海底競技場決戰。",
+    bi3h:"冰封雪山", bi3:"攀上結冰的山島，山頂有 Boss 等著。",
+    bi4h:"火山島", bi4:"最後的探索與最終決戰，都在熔岩之間。",
+    finalH:"最終 Boss：邪惡浣熊與邪惡小熊貓", finalP:"兩隻 Boss 同時登場，而且牠們也會用團隊攻擊。",
+    foesH:"目前試玩版裡的對手", foesP:"敵人分成普通和穿甲兩種，也分近戰與遠程。每一招都有明顯的預備動作，那就是閃避的時機。",
+    f1h:"岩石海龜", heavy:"重甲", f1:"護甲還在時會散發詛咒的光澤。會揮十字鎬重劈、躍起砸進水裡濺起大浪、沿地面推出岩石波。打碎外殼後，牠會試著重新穿回護甲。",
+    f2h:"寄居蟹", medium:"中甲", f2:"揮舞巨鉗的海岸霸主。出手前會先高舉蟹鉗蓄力，閃開之後兩人合力敲開牠的殼。",
+    minion:"小兵", f3h:"青蛙劍士", light:"輕甲", f3:"成群出沒，專挑還站著的人。用 Plunder 的雙重橫掃把牠們趕到一起，再一口氣解決。",
+    playH:"兩個人，一個螢幕",
+    pg1h:"出航前的準備", pg1a:"玩家 1 選角色，再選鍵鼠或認領一支手把", pg1b:"玩家 2 重複一次，被選走的角色不能重複選", pg1c:"兩人都準備好，按下「Set Sail」進入港口",
+    pg2h:"選單操作", mouse:"滑鼠", click:"點擊", keyboard:"鍵盤", arrows:"方向鍵", controller:"手把", dpad:"十字鍵", back:"返回", or:"或",
+    pg3h:"戰鬥畫面", screen:"畫面", screenV:"同一個螢幕，兩人共用鏡頭", hud:"介面", hudV:"血量、能量、金幣、按鍵提示", revive:"救援", hold:"長按", for3:"3 秒",
+    makersH:"製作團隊", logoAlt:"Cozy Corsairs 標誌：浪花上的一艘帆船",
+    footer:"開發中，內容可能隨開發調整。"
+  };
+  var MSG = {
+    en:{armor:function(n,m){return "Armor "+n+" / "+m;}, down:"Knocked down!", start:"Press either side to start.", gapHint:"The gap between your two hits shows up here.",
+        best:function(ms){return "Best: "+(ms===null?"—":ms+" ms");}, already:"It's already down. Wait for it to armor up again.",
+        sync:"Synchronized Strike! Armor shattered, enemy knocked down.", gap:function(ms){return "Gap: "+ms+" ms";},
+        late:"A beat late. Two layers broke and the late attacker tumbled.", lateGap:function(ms,d){return "Gap: "+ms+" ms. "+d+" ms faster and you'd have it.";},
+        bouncePaws:"Paws's sword bounced off the armor.", bouncePlunder:"Plunder's anchor bounced off the armor.", wait:"Your partner needs to follow within 0.3 s.",
+        rearm:"The turtle armored up again. Go for another one.", reset:"Armor restored."},
+    zh:{armor:function(n,m){return "護甲 "+n+" / "+m;}, down:"擊倒！", start:"按下任一邊開始。", gapHint:"兩次命中的間隔會顯示在這裡。",
+        best:function(ms){return "最佳紀錄："+(ms===null?"—":ms+" 毫秒");}, already:"牠已經倒下了，等牠重新穿上護甲。",
+        sync:"同步打擊！護甲全碎，敵人被擊倒。", gap:function(ms){return "間隔 "+ms+" 毫秒";},
+        late:"慢了半拍，敲掉兩層護甲，晚出手的人失手翻滾。", lateGap:function(ms,d){return "間隔 "+ms+" 毫秒，再快 "+d+" 毫秒就成功";},
+        bouncePaws:"Paws 的劍被護甲彈開了。", bouncePlunder:"Plunder 的錨被護甲彈開了。", wait:"等隊友在 0.3 秒內跟上",
+        rearm:"海龜重新穿上了護甲，再來一次。", reset:"護甲已重置。"}
+  };
+
+  var EN = {}, ENALT = {}, ENARIA = {};
+  var textNodes = document.querySelectorAll('[data-i18n]');
+  var altNodes = document.querySelectorAll('[data-i18n-alt]');
+  var ariaNodes = document.querySelectorAll('[data-i18n-aria]');
+  textNodes.forEach(function(el){ EN[el.dataset.i18n] = el.innerHTML; });
+  altNodes.forEach(function(el){ ENALT[el.dataset.i18nAlt] = el.getAttribute('alt'); });
+  ariaNodes.forEach(function(el){ ENARIA[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
+
+  var lang = 'en';
+  var btnEn = document.getElementById('langEn'), btnZh = document.getElementById('langZh');
+  var lastMsg = null; // {key, args, cls} so a language switch re-renders the current demo line
+
+  function setLang(next, save){
+    lang = next;
+    var zh = next === 'zh';
+    document.documentElement.lang = zh ? 'zh-Hant' : 'en';
+    textNodes.forEach(function(el){ var k = el.dataset.i18n; el.innerHTML = zh && ZH[k] != null ? ZH[k] : EN[k]; });
+    altNodes.forEach(function(el){ var k = el.dataset.i18nAlt; el.setAttribute('alt', zh && ZH[k] ? ZH[k] : ENALT[k]); });
+    ariaNodes.forEach(function(el){ var k = el.dataset.i18nAria; el.setAttribute('aria-label', zh && ZH[k] ? ZH[k] : ENARIA[k]); });
+    btnEn.setAttribute('aria-pressed', String(!zh));
+    btnZh.setAttribute('aria-pressed', String(zh));
+    if (save){ try { localStorage.setItem('pp-lang', next); } catch(e){} }
+    renderDemo();
+  }
+  btnEn.addEventListener('click', function(){ setLang('en', true); });
+  btnZh.addEventListener('click', function(){ setLang('zh', true); });
+
+  /* ---------- Synchronized Strike demo ---------- */
+  var CO_OP = 300, FUMBLE = 600, MAX = 4;
+  var armor = MAX, last = {paws:-1e9, plunder:-1e9}, best = null, resetTimer = null;
+  var pips = document.querySelectorAll('#armor i');
+  var tstate = document.getElementById('tstate');
+  var res = document.getElementById('res');
+  var gapEl = document.getElementById('gap');
+  var bestEl = document.getElementById('best');
+  var target = document.getElementById('target');
+  var pads = {paws:document.getElementById('padPaws'), plunder:document.getElementById('padPlunder')};
+
+  function T(){ return MSG[lang]; }
+  function renderDemo(){
+    var t = T();
+    pips.forEach(function(p,i){ p.classList.toggle('off', i >= armor); });
+    tstate.textContent = armor > 0 ? t.armor(armor, MAX) : t.down;
+    tstate.style.color = armor > 0 ? '' : 'var(--leaf)';
+    bestEl.textContent = t.best(best);
+    if (!lastMsg){ res.textContent = t.start; res.className = 'res'; gapEl.textContent = t.gapHint; return; }
+    var m = lastMsg;
+    res.textContent = t[m.key]; res.className = 'res ' + (m.cls || '');
+    gapEl.textContent = m.gap ? (typeof t[m.gap] === 'function' ? t[m.gap].apply(null, m.args || []) : t[m.gap]) : '—';
+  }
+  function say(key, cls, gapKey, args){ lastMsg = {key:key, cls:cls, gap:gapKey, args:args}; renderDemo(); }
+  function shake(){ target.classList.remove('shake'); void target.offsetWidth; target.classList.add('shake'); }
+  function fullReset(key){ clearTimeout(resetTimer); armor = MAX; last = {paws:-1e9, plunder:-1e9}; say(key, '', 'gapHint'); }
+
+  function hit(who){
+    var other = who === 'paws' ? 'plunder' : 'paws';
+    var now = performance.now();
+    var d = now - last[other];
+    last[who] = now;
+    var pad = pads[who]; pad.classList.add('hit'); setTimeout(function(){ pad.classList.remove('hit'); }, 110);
+    if (armor === 0){ say('already', '', null); return; }
+    var ms = Math.round(d);
+    if (d <= CO_OP){
+      armor = 0; last = {paws:-1e9, plunder:-1e9};
+      if (best === null || ms < best) best = ms;
+      say('sync', 'ok', 'gap', [ms]); shake();
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(function(){ fullReset('rearm'); }, 2600);
+    } else if (d <= FUMBLE){
+      armor = Math.max(1, armor - 2); last = {paws:-1e9, plunder:-1e9};
+      say('late', 'meh', 'lateGap', [ms, ms - CO_OP]); shake();
+    } else {
+      say(who === 'paws' ? 'bouncePaws' : 'bouncePlunder', 'no', 'wait');
+    }
+  }
+  pads.paws.addEventListener('pointerdown', function(e){ e.preventDefault(); hit('paws'); });
+  pads.plunder.addEventListener('pointerdown', function(e){ e.preventDefault(); hit('plunder'); });
+  [['paws',pads.paws],['plunder',pads.plunder]].forEach(function(p){
+    p[1].addEventListener('keydown', function(e){ if ((e.key === 'Enter' || e.key === ' ') && !e.repeat){ e.preventDefault(); hit(p[0]); } });
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if (k === 'a') hit('paws'); else if (k === 'l') hit('plunder');
+  });
+  document.getElementById('reset').addEventListener('click', function(){ fullReset('reset'); });
+
+  var saved = null;
+  try { saved = localStorage.getItem('pp-lang'); } catch(e){}
+  setLang(saved === 'zh' ? 'zh' : 'en', false);
+})();
+</script>
+</body>
+</html>
