@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="img/sticker-plunder.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
   <style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
   <style>
 /* Look: a cozy pirate party game. Sea-foam water for the page, white chunky cards with thick navy outlines and drop shadows, wooden plank signs, wavy section edges. Fixed light theme. English by default, with a Traditional Chinese toggle. */
@@ -36,6 +36,8 @@
   color-scheme:light;
 }
 html[lang="zh-Hant"]{--font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Nunito",system-ui,sans-serif}
+html[lang="zh-Hans"]{--font-body:"Noto Sans SC","PingFang SC","Microsoft YaHei","Nunito",system-ui,sans-serif;--font-pirate:"Libre Bodoni","Noto Serif SC","Songti SC","SimSun",serif}
+html[lang="zh-Hans"] body{line-height:1.85}
 @font-face{font-family:"Libre Bodoni";src:url("fonts/librebodoni.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
 @font-face{font-family:"Libre Bodoni";src:url("fonts/librebodoni-italic.woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap}
 *{box-sizing:border-box}
@@ -76,14 +78,24 @@ p{margin:0}
 .wordmark{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.03em;text-decoration:none;color:var(--rope);white-space:nowrap}
 .wordmark span{color:var(--leaf)}
 .nav-right{display:flex;align-items:center;gap:10px}
-.nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.nav ul:not(.lang-menu){display:flex;gap:2px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
 .nav a.link{display:block;padding:4px 12px;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:800;font-size:.95rem}
 .nav a.link:hover{background:var(--paper)}
-@media (max-width:860px){.nav ul{display:none}}
-.lang{display:inline-flex;border:2px solid var(--text);border-radius:10px;overflow:hidden;box-shadow:0 3px 0 var(--text);background:var(--paper-3)}
+@media (max-width:860px){.nav ul:not(.lang-menu){display:none}}
+.lang{position:relative;display:inline-flex;border:2px solid var(--text);border-radius:10px;box-shadow:0 3px 0 var(--text);background:var(--paper-3)}
 .lang button{appearance:none;border:0;background:transparent;color:var(--text);font-family:var(--font-body);font-weight:900;font-size:.9rem;padding:4px 12px;cursor:pointer;line-height:1.5}
-.lang button + button{border-left:2px solid var(--text)}
+.lang > button{border-radius:8px 0 0 8px}
+.lang .lang-zh > button{border-left:2px solid var(--text);border-radius:0 8px 8px 0;display:inline-flex;align-items:center;gap:4px}
+.lang .lang-zh > button::after{content:"";width:0;height:0;border:4px solid transparent;border-top:5px solid currentColor;border-bottom:0;margin-top:2px}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper-3)}
+/* 中文 dropdown: 繁體 / 简体 */
+.lang-menu{position:absolute;right:-2px;top:calc(100% + 8px);z-index:20;min-width:9.5rem;margin:0;padding:6px;list-style:none;background:var(--paper-3);border:2px solid var(--text);border-radius:12px;box-shadow:0 4px 0 var(--text)}
+.lang-menu button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;border-radius:8px;padding:6px 10px;text-align:left;white-space:nowrap}
+.lang-menu button:hover,.lang-menu button:focus-visible{background:var(--paper)}
+.lang-menu button[aria-checked="true"]{color:var(--ink)}
+.lang-menu button[aria-checked="true"]::after{content:"\2713";font-weight:900}
+.lang [lang="zh-Hant"]{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+.lang [lang="zh-Hans"]{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
 
 /* hero */
 .hero{position:relative;overflow:hidden}
@@ -311,7 +323,13 @@ footer{background:var(--paper-2)}
       </ul>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" id="langEn" aria-pressed="true" lang="en">EN</button>
-        <button type="button" id="langZh" aria-pressed="false" lang="zh-Hant">中文</button>
+        <div class="lang-zh">
+          <button type="button" id="langZh" aria-pressed="false" aria-haspopup="menu" aria-expanded="false" aria-controls="langMenu" lang="zh">中文</button>
+          <ul class="lang-menu" id="langMenu" role="menu" hidden>
+            <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-lang="zh" lang="zh-Hant">繁體中文</button></li>
+            <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-lang="zhs" lang="zh-Hans">简体中文</button></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -736,6 +754,77 @@ footer{background:var(--paper-2)}
     voyageAlt:"Paws 和 Plunder 並肩走路",
     cardH:"Steam 願望清單", cardP:"把 Plunder Paws 加入願望清單，幫我們把遊戲帶到你面前！", cardBtn:"立即加入"
   };
+  /* ZHS:BEGIN generated from ZH by tools/gen_zhs.py; edit ZH and re-run, not this */
+  var ZHS = {
+    nav:"主菜单", navStory:"故事", navCrew:"船员", navTeam:"团队攻击", navWorld:"世界", navMakers:"制作团队",
+    tagline:"一起出航，来场温馨又混乱的冒险",
+    pitch:"一款可爱的双人合作海盗动作冒险。你和朋友扮演两只动物海盗：一只小熊猫、一只浣熊。它们是温馨的 2D 贴纸角色，一起驾船穿越色彩缤纷的 3D 群岛寻宝。被诅咒的骷髅和巨大的 Boss 挡在你们和黄金之间，搭配彼此的能力打出团队攻击，才能赢下战斗、带走宝藏。",
+    facts:"游戏信息", chip1:"双人本地合作", chip2:"海盗动作冒险", chip3:"键盘鼠标 / 手柄",
+    cta1:"在 Steam 加入愿望清单", cta2:"看故事",
+    storyH:"一对兄妹，一桌贴纸，一整片想象的海",
+    story1:"Penny 和 Pierce 住在海边的小岛镇上。哥哥长大了，兄妹俩的兴趣越走越远，两个人心里都有点寂寞。",
+    story2:"妈妈提议他们像小时候一样一起玩。Pierce 一开始不太情愿，觉得玩贴纸太幼稚；Penny 听了有点受伤，但还是很高兴哥哥愿意陪她。于是，他们摊开海盗动物贴纸、玩具和图画，开始玩了起来。",
+    story3:"两人共同的想象让游戏活了过来。玩家走进孩子们的想象世界，扬帆出发，展开一场温馨又混乱的寻宝冒险。故事以动画开场和结尾，每一关前会有角色和对话框组成的短过场。",
+    pierceTag:"哥哥 · 化身 Plunder", pierceTxt:"卡在童年和长大之间，喜欢动作、挑战和竞争。一开始觉得玩扮家家酒有点丢脸，但他爱妹妹，最后还是被拉进冒险。",
+    pennyTag:"妹妹 · 化身 Paws", pennyTxt:"想象力丰富、温暖又直率，完全相信两人一起创造的贴纸世界。冒险的名字、规则和那份惊奇，都是她给的。",
+    pillarsH:"两个玩家互相沟通，在一团欢乐的混乱中一起解决战斗",
+    pl1h:"可爱动物", pl1:"像会动起来的收藏贴纸：粗轮廓、简单造型、表情丰富，小孩想贴在笔记本上，大人也想买来收藏。",
+    pl2h:"合作游玩", pl2:"两人并肩作战、互相喊战术、互相救援。很多一个人过不去的关，两个人一起就行。",
+    pl3h:"欢乐混乱", pl3:"把队友打成贴纸球丢出去、连招慢半拍失手翻滚、两人一起倒地被送回港口，混乱本身就是乐趣。",
+    pl4h:"动作战斗", pl4:"近战、冲刺、远程与蓄力攻击。敌人出招前有明显预备动作，看准时机闪避再反击。",
+    feeling:"玩家应该感到<em>开心、惊喜，想和对方合作</em>。会笑出来，也会更靠近彼此。",
+    crewH:"真正的双主角，不是英雄和跟班", crewP:"两人的差异不会妨碍合作，正是因为不一样，这个团队才行得通。",
+    pawsAlt:"小熊猫 Paws 的贴纸造型：绿色头巾、绿背心、环纹尾巴",
+    pawsTraits:"善良、勇敢、好奇、细心、安静地无所畏惧",
+    pawsTxt:"勇敢的小熊猫探险家，相信冒险最棒的结局是大家一起回家。她会注意到别人错过的细节，安抚受惊的小生物，朋友有危险时寸步不让。看起来比 Plunder 温柔，但一点也不软弱。",
+    pawsWeapon:"目前试玩版的武器：长剑 · 快攻型",
+    slotN:"普攻", slotA:"技能 A", slotB:"技能 B",
+    pm1:"三连快斩", pm1d:"弧形三段连击，第三刀把敌人稍微击退。",
+    pm2:"佯攻斩", pm2d:"突进穿过敌群，标记敌人 3 秒、让它混乱 0.8 秒。",
+    pm3:"幻影刃冲", pm3d:"在附近的敌人之间瞬移连斩，全程无敌。",
+    plunderAlt:"浣熊 Plunder 的贴纸造型：海盗三角帽、蓝色外套",
+    plunderTraits:"机灵、搞笑、冲动、爱演、好胜、忠诚、爱宝藏，心其实很软",
+    plunderTxt:"调皮的浣熊海盗，相信任何问题都能靠快手、小聪明，再加一点戏剧性的过度自信解决。他是两人中比较混乱的那一半，天生的浣熊花纹让他看起来像个小强盗，但他是讨人喜欢的捣蛋鬼，不是坏人。",
+    plunderWeapon:"目前试玩版的武器：船锚 · 重击型",
+    am1:"双重横扫", am1d:"两段横扫，第二下把敌人扫飞约 3 米。",
+    am2:"海啸震地", am2d:"重击地面掀飞敌人，落地后减速，震波无视格挡。",
+    am3:"过顶重砸", am3d:"蓄力重击，伤害是剑的 4 倍，满蓄力可以按住等队友。",
+    banter:"角色对话", b1:"“我有个计划！”", b2:"“是个好计划吗？”", b3:"“那部分还在读取中。”",
+    c1a:"Plunder 大胆", c1b:"Paws 体贴", c2a:"Plunder 追宝藏", c2b:"Paws 守护意义", c3a:"Plunder 装坚强", c3b:"Paws 看穿他",
+    c4a:"Plunder 带来冲劲", c4b:"Paws 指引方向", c5a:"Plunder 让冒险刺激", c5b:"Paws 让冒险有意义",
+    taH:"两人的招式组合在一起，才打得赢", taP:"大部分敌人都穿着护甲，单人攻击只会被弹开。抓准时机一起出手，或者干脆把队友当武器丢出去。",
+    co1h:"贴纸球", co1:"玩家 1 用近战打中玩家 2，玩家 2 会卷成一颗贴纸球飞出去撞向敌人，撞完再变回原样。",
+    co2h:"攻击组合", co2:"近战、远程互相搭配出不同的团队攻击。每座 Boss 岛屿都是为其中一种组合设计的考验。",
+    co3h:"救起队友", co3:"血量归零不会直接出局。队友靠近长按 <kbd>F</kbd> 或手柄 <kbd>B</kbd> 3 秒就能救起；两人都倒下就回到港口重整旗鼓。",
+    worldH:"2D 贴纸角色，3D 温馨岛屿",
+    hubAlt:"游戏中的港口岛：沙滩、岩石、棕榈树、海盗船，以及写着 PLAY 和 Dummy Practice 的木牌",
+    hubCap:"港口岛（Hub）实机画面。角色是 3D 模型加 3D 动画，再渲染成 8 方向的 2D 贴纸精灵。",
+    lp1h:"击退敌人波次，赚取金币", lp1:"每一波敌人都会掉落宝藏。",
+    lp2h:"打倒 Boss，解锁新装备", lp2:"弯刀、铁锤、鱼叉，以及冲刺攻击、火焰攻击、炮弹、火球等能力。",
+    lp3h:"回港口采购", lp3:"用金币向商人购买武器和能力，出航前先在训练场练好团队攻击。",
+    hubStart:"热带港口 · 商人 · 训练教学，每趟航程都从这里出发。",
+    bi1h:"热带岛屿", bi1:"探索海滩和丛林，再迎战第一只 Boss。",
+    bi2h:"海底世界", bi2:"潜入浪花之下，在海底竞技场决战。",
+    bi3h:"冰封雪山", bi3:"攀上结冰的山岛，山顶有 Boss 等着。",
+    bi4h:"火山岛", bi4:"最后的探索与最终决战，都在熔岩之间。",
+    finalH:"最终 Boss：邪恶浣熊与邪恶小熊猫", finalP:"两只 Boss 同时登场，而且它们也会用团队攻击。",
+    foesH:"目前试玩版里的对手", foesP:"敌人分成普通和穿甲两种，也分近战与远程。每一招都有明显的预备动作，那就是闪避的时机。",
+    f1h:"岩石海龟", heavy:"重甲", f1:"护甲还在时会散发诅咒的光泽。会挥十字镐重劈、跃起砸进水里溅起大浪、沿地面推出岩石波。打碎外壳后，它会试着重新穿回护甲。",
+    f2h:"寄居蟹", medium:"中甲", f2:"挥舞巨钳的海岸霸主。出手前会先高举蟹钳蓄力，闪开之后两人合力敲开它的壳。",
+    minion:"小兵", f3h:"青蛙剑士", light:"轻甲", f3:"成群出没，专挑还站着的人。用 Plunder 的双重横扫把它们赶到一起，再一口气解决。",
+    playH:"两个人，一个屏幕",
+    pg1h:"出航前的准备", pg1a:"玩家 1 选角色，再选键鼠或认领一支手柄", pg1b:"玩家 2 重复一次，被选走的角色不能重复选", pg1c:"两人都准备好，按下“Set Sail”进入港口",
+    pg2h:"菜单操作", mouse:"鼠标", click:"点击", keyboard:"键盘", arrows:"方向键", controller:"手柄", dpad:"十字键", back:"返回", or:"或",
+    pg3h:"战斗画面", screen:"画面", screenV:"同一个屏幕，两人共用镜头", hud:"界面", hudV:"血量、能量、金币、按键提示", revive:"救援", hold:"长按", for3:"3 秒",
+    makersH:"制作团队", logoAlt:"Cozy Corsairs 标志：浪花上的一艘帆船",
+    footer:"开发中，内容可能随开发调整。",
+    banH:"在 Steam 将 Plunder Paws 加入愿望清单", banP:"你的愿望清单对我们的帮助比你想象的还大！", banBtn:"立即加入 ›",
+    ftAbout:"Cozy Corsairs 团队制作的可爱双人合作海盗动作冒险。", ftExplore:"探索", ftMore:"更多",
+    navFoes:"对手", navPlay:"玩法",
+    voyageAlt:"Paws 和 Plunder 并肩走路",
+    cardH:"Steam 愿望清单", cardP:"把 Plunder Paws 加入愿望清单，帮我们把游戏带到你面前！", cardBtn:"立即加入"
+  };
+  /* ZHS:END */
   var EN = {}, ENALT = {}, ENARIA = {};
   var textNodes = document.querySelectorAll('[data-i18n]');
   var altNodes = document.querySelectorAll('[data-i18n-alt]');
@@ -745,19 +834,45 @@ footer{background:var(--paper-2)}
   ariaNodes.forEach(function(el){ ENARIA[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
 
   var btnEn = document.getElementById('langEn'), btnZh = document.getElementById('langZh');
+  var menu = document.getElementById('langMenu');
+  var items = [].slice.call(menu.querySelectorAll('[data-lang]'));
+  // 'zh' = Traditional, 'zhs' = Simplified (ZHS is generated from ZH by tools/gen_zhs.py)
+  var LANGS = {
+    en:  { html: 'en',      dict: null, label: '中文' },
+    zh:  { html: 'zh-Hant', dict: ZH,   label: '繁體' },
+    zhs: { html: 'zh-Hans', dict: ZHS,  label: '简体' }
+  };
 
   function setLang(next, save){
-    var zh = next === 'zh';
-    document.documentElement.lang = zh ? 'zh-Hant' : 'en';
-    textNodes.forEach(function(el){ var k = el.dataset.i18n; el.innerHTML = zh && ZH[k] != null ? ZH[k] : EN[k]; });
-    altNodes.forEach(function(el){ var k = el.dataset.i18nAlt; el.setAttribute('alt', zh && ZH[k] ? ZH[k] : ENALT[k]); });
-    ariaNodes.forEach(function(el){ var k = el.dataset.i18nAria; el.setAttribute('aria-label', zh && ZH[k] ? ZH[k] : ENARIA[k]); });
-    btnEn.setAttribute('aria-pressed', String(!zh));
-    btnZh.setAttribute('aria-pressed', String(zh));
+    var L = LANGS[next] || LANGS.en, D = L.dict;
+    document.documentElement.lang = L.html;
+    textNodes.forEach(function(el){ var k = el.dataset.i18n; el.innerHTML = D && D[k] != null ? D[k] : EN[k]; });
+    altNodes.forEach(function(el){ var k = el.dataset.i18nAlt; el.setAttribute('alt', D && D[k] ? D[k] : ENALT[k]); });
+    ariaNodes.forEach(function(el){ var k = el.dataset.i18nAria; el.setAttribute('aria-label', D && D[k] ? D[k] : ENARIA[k]); });
+    btnEn.setAttribute('aria-pressed', String(!D));
+    btnZh.setAttribute('aria-pressed', String(!!D));
+    btnZh.textContent = L.label;
+    btnZh.setAttribute('lang', L.html === 'en' ? 'zh' : L.html);
+    items.forEach(function(b){ b.setAttribute('aria-checked', String(b.dataset.lang === next)); });
     if (save){ try { localStorage.setItem('pp-lang', next); } catch(e){} }
   }
-  btnEn.addEventListener('click', function(){ setLang('en', true); });
-  btnZh.addEventListener('click', function(){ setLang('zh', true); });
+
+  function openMenu(open, focusFirst){
+    menu.hidden = !open;
+    btnZh.setAttribute('aria-expanded', String(open));
+    if (open && focusFirst){ (menu.querySelector('[aria-checked="true"]') || items[0]).focus(); }
+  }
+  btnEn.addEventListener('click', function(){ openMenu(false); setLang('en', true); });
+  btnZh.addEventListener('click', function(e){ e.stopPropagation(); openMenu(menu.hidden, e.detail === 0); });
+  items.forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang, true); openMenu(false); btnZh.focus(); });
+  });
+  menu.addEventListener('keydown', function(e){
+    var i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); items[(i + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length].focus(); }
+  });
+  document.addEventListener('click', function(e){ if (!menu.hidden && !menu.contains(e.target)) openMenu(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !menu.hidden){ openMenu(false); btnZh.focus(); } });
 
   /* ---------- Steam wishlist ---------- */
   // Paste the Steam store page URL here once it exists; every wishlist button on the page uses it.
@@ -770,7 +885,7 @@ footer{background:var(--paper-2)}
 
   var saved = null;
   try { saved = localStorage.getItem('pp-lang'); } catch(e){}
-  setLang(saved === 'zh' ? 'zh' : 'en', false);
+  setLang(LANGS[saved] ? saved : 'en', false);
 })();
 </script>
 </body>
