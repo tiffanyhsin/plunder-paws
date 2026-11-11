@@ -8,27 +8,27 @@
   <meta property="og:title" content="Plunder Paws">
   <meta property="og:description" content="Plunder Paws is a cute, co-op pirate action adventure. Two animal pirates, a red panda and a raccoon, sail a colorful 3D island world and combine team attacks to claim the treasure.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#ece0c4">
+  <meta name="theme-color" content="#e3f4f8">
   <link rel="icon" type="image/png" href="img/sticker-plunder.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
   <style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
   <style>
-/* Layout: 一張攤開的藏寶圖。羊皮紙底、捲軸標題、藍色虛線，貼紙角色貼在紙上。依 Creative Direction Deck 的配色，刻意固定為單一淺色紙面。英文為預設，可切換繁體中文。 */
+/* Look: a cozy pirate party game. Sea-foam water for the page, white chunky cards with thick navy outlines and drop shadows, wooden plank signs, wavy section edges. Fixed light theme. English by default, with a Traditional Chinese toggle. */
 :root{
-  --paper:#ece0c4;
-  --paper-2:#e2d2ae;
-  --paper-3:#f6eedb;
-  --ink:#2f4a6b;
-  --ink-soft:#5b6f86;
-  --text:#3b3226;
-  --muted:#6e604c;
-  --leaf:#5c8a34;
-  --rope:#8a5a33;
-  --red:#c8442f;
-  --sea:#2c86c4;
-  --gold:#e3a93a;
+  --paper:#e3f4f8;   /* page: pale sea foam */
+  --paper-2:#bfe5ee; /* alternate bands, dividers */
+  --paper-3:#ffffff; /* cards */
+  --ink:#1f4e79;
+  --ink-soft:#4f7393;
+  --text:#18283a;    /* outlines + body text */
+  --muted:#4a5d71;
+  --leaf:#4f9d32;
+  --rope:#9a5a2b;
+  --red:#e0483a;
+  --sea:#1d9bc4;
+  --gold:#ffb72b;
   --font-display:"Lilita One","Arial Rounded MT Bold","Noto Sans TC",sans-serif;
   /* blue subtitles; BlackPearl has Latin only, so Chinese falls back to the display font */
   --font-pirate:"BlackPearl","Lilita One","Noto Sans TC",sans-serif;
@@ -42,10 +42,8 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{
   background-color:var(--paper);
-  background-image:
-    radial-gradient(ellipse at 12% 8%,rgba(255,250,235,.55),transparent 45%),
-    radial-gradient(ellipse at 90% 40%,rgba(160,120,70,.12),transparent 50%),
-    radial-gradient(ellipse at 20% 85%,rgba(160,120,70,.10),transparent 45%);
+  background-image:radial-gradient(circle,rgba(31,78,121,.09) 1.6px,transparent 2px);
+  background-size:24px 24px;
   color:var(--text);font-family:var(--font-body);font-size:1rem;line-height:1.75;overflow-x:hidden}
 html[lang="zh-Hant"] body{line-height:1.85}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
@@ -56,7 +54,11 @@ img{display:block}
 h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
 p{margin:0}
 .section{padding-block:clamp(36px,4.5vw,60px)}
-.section.alt{background:color-mix(in srgb,var(--paper-2) 50%,transparent)}
+/* alternate bands get a wavy top and bottom edge, like water lapping */
+.section.alt{position:relative;background:var(--paper-2);margin-block:22px}
+.section.alt::before,.section.alt::after{content:"";position:absolute;left:0;right:0;height:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 22' preserveAspectRatio='none'%3E%3Cpath d='M0 22V12C20 0 40 0 60 12S100 24 120 12V22Z' fill='%23bfe5ee'/%3E%3C/svg%3E") repeat-x;background-size:120px 22px}
+.section.alt::before{top:-21px}
+.section.alt::after{bottom:-21px;transform:scaleY(-1)}
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
 @media (max-width:900px){.split{grid-template-columns:1fr}}
 
@@ -68,14 +70,14 @@ p{margin:0}
 .center{justify-items:center;text-align:center;margin-inline:auto}
 
 /* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(6px);border-bottom:2px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,#fff 92%,transparent);backdrop-filter:blur(6px);border-bottom:3px solid var(--text)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
 .wordmark{font-family:var(--font-display);font-size:1.45rem;letter-spacing:.03em;text-decoration:none;color:var(--rope);white-space:nowrap}
 .wordmark span{color:var(--leaf)}
 .nav-right{display:flex;align-items:center;gap:10px}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
 .nav a.link{display:block;padding:4px 12px;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:800;font-size:.95rem}
-.nav a.link:hover{background:var(--paper-2)}
+.nav a.link:hover{background:var(--paper)}
 @media (max-width:860px){.nav ul{display:none}}
 .lang{display:inline-flex;border:2px solid var(--text);border-radius:10px;overflow:hidden;box-shadow:0 3px 0 var(--text);background:var(--paper-3)}
 .lang button{appearance:none;border:0;background:transparent;color:var(--text);font-family:var(--font-body);font-weight:900;font-size:.9rem;padding:4px 12px;cursor:pointer;line-height:1.5}
@@ -269,6 +271,28 @@ footer{background:color-mix(in srgb,var(--paper-2) 60%,var(--paper))}
 .foot-card p{color:var(--muted);font-size:.86rem;line-height:1.5}
 .foot-card .btn{grid-column:1 / -1;justify-content:center;margin-top:10px}
 .foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:16px 24px;border-top:2px dashed color-mix(in srgb,var(--ink) 25%,transparent);color:var(--muted);font-size:.84rem}
+
+/* cozy party-game look: every card is a chunky toy with a thick outline and a hard drop shadow */
+.kid,.crew,.combo,.foe,.ctable,.crewlist li,.foot-card,.bubble,.biome,.chips li{border:3px solid var(--text);box-shadow:0 5px 0 var(--text)}
+.chips li{box-shadow:0 3px 0 var(--text);color:var(--text)}
+.crew,.foot-card{border-radius:20px}
+.combo{border-left:10px solid var(--sea)}
+.foe{border-left:10px solid var(--red)}
+.foe:has(.minor){border-left-color:var(--ink-soft)}
+.crewlist li::before,.crewlist li::after{display:none}
+.crewlist li{border-radius:12px}
+.biome.tropic{background:#c4e8a6}
+.biome.under{background:#a3dcf0}
+.biome.frozen{background:#eef7fc}
+.biome.volcano{background:#ffbea4}
+.world-shot{border:4px solid var(--text);border-radius:14px;box-shadow:0 6px 0 var(--text)}
+.final{border:3px solid var(--text);box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.moves,.moves li,.contrast li,.ctable dt,.ctable dd{border-color:#d3e9ef}
+footer{background:var(--paper-2)}
+/* hero: shallow lagoon with a sandy treasure island, rolling into the page with a wave */
+.hero{background:linear-gradient(180deg,#d2f1fb 0%,#ade3f2 75%,#94d8eb 100%);padding-bottom:26px}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V14C27 0 53 0 80 14S133 28 160 14V26Z' fill='%23e3f4f8'/%3E%3C/svg%3E") repeat-x;background-size:160px 26px}
+.stickers .island{background:#f7e1a8;opacity:1;border:3px solid var(--text);box-shadow:0 0 0 16px rgba(255,255,255,.5),inset 0 -12px 0 #e9c57c}
 </style>
 </head>
 <body>
