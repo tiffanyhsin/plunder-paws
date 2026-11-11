@@ -30,13 +30,14 @@
   --sea:#1d9bc4;
   --gold:#ffb72b;
   --font-display:"Lilita One","Arial Rounded MT Bold","Noto Sans TC",sans-serif;
-  /* blue subtitles; BlackPearl has Latin only, so Chinese falls back to the display font */
-  --font-pirate:"BlackPearl","Lilita One","Noto Sans TC",sans-serif;
+  /* blue subtitles; Libre Bodoni is subset to Latin, so Chinese falls back to a serif CJK face */
+  --font-pirate:"Libre Bodoni","Noto Serif TC","Songti TC","PMingLiU",serif;
   --font-body:"Nunito","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   color-scheme:light;
 }
 html[lang="zh-Hant"]{--font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Nunito",system-ui,sans-serif}
-@font-face{font-family:"BlackPearl";src:url("fonts/blackpearl.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Libre Bodoni";src:url("fonts/librebodoni.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Libre Bodoni";src:url("fonts/librebodoni-italic.woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
@@ -310,6 +311,9 @@ footer{background:var(--paper-2)}
 .hero{background:linear-gradient(180deg,#d2f1fb 0%,#ade3f2 75%,#94d8eb 100%);padding-bottom:26px}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V14C27 0 53 0 80 14S133 28 160 14V26Z' fill='%23e3f4f8'/%3E%3C/svg%3E") repeat-x;background-size:160px 26px}
 .voyage.played .v-hint{opacity:0;transition:opacity .4s}
+/* Libre Bodoni subtitles: bold, no extra tracking; the hero tagline in italic */
+.section-head h2,.combo h3,.foe h3,.ctable h3,.foot-card b{font-weight:700;letter-spacing:0}
+.tagline,.foot-brand .tag{font-style:italic;font-weight:600;letter-spacing:0}
 </style>
 </head>
 <body>
